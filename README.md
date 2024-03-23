@@ -13,55 +13,55 @@ A basic URL shortening service developed as a REST API using Python and Flask. T
 
 - **GET /health**: Returns the service health data of the application along with the service health of its connected services. Example response:
 
-    ```json
-    {
-        "response-timestamp": "2024/03/25T00:33:28:570514",
-        "response-data": {
-            "health-check-timestamp": "2024/03/25T00:33:28:570464",
-            "application-name": "URL-SHORTENER-REST-API",
-            "application-status": "UP",
-            "connected-services-health": []
-        }
+  ```json
+  {
+    "response-timestamp": "2024/03/25T00:33:28:570514",
+    "response-data": {
+      "health-check-timestamp": "2024/03/25T00:33:28:570464",
+      "application-name": "URL-SHORTENER-REST-API",
+      "application-status": "UP",
+      "connected-services-health": []
     }
-    ```
+  }
+  ```
 
-- **POST /shorten**: *(To be implemented)* Shorten a long URL into a shorter version. Example request:
+- **POST /shorten**: _(To be implemented)_ Shorten a long URL into a shorter version. Example request:
 
-    ```json
-    {
-        "long_url": "https://example.com/very/long/url"
+  ```json
+  {
+    "long_url": "https://example.com/very/long/url"
+  }
+  ```
+
+  Example response:
+
+  ```json
+  {
+    "response-timestamp": "2024/03/25T00:33:28:570514",
+    "response-data": {
+      "short_url": "http://localhost:5000/abcd1234"
     }
-    ```
+  }
+  ```
 
-    Example response:
+- **GET /\<short_url>**: _(To be implemented)_ Redirect users from a short URL to the original long URL.
 
-    ```json
-    {
-        "response-timestamp": "2024/03/25T00:33:28:570514",
-        "response-data": {
-            "short_url": "http://localhost:5000/abcd1234"
-        }
+- **GET /original**: _(To be implemented)_ Retrieve the original URL from the given short URL value. Example request:
+
+  ```
+  GET /original?short_url=abcd1234
+  ```
+
+  Example response:
+
+  ```json
+  {
+    "response-timestamp": "2024/03/25T00:33:28:570514",
+    "response-data": {
+      "original_url": "https://example.com/very/long/url"
     }
-    ```
-
-- **GET /\<short_url>**: *(To be implemented)* Redirect users from a short URL to the original long URL.
-
-- **GET /original**: *(To be implemented)* Retrieve the original URL from the given short URL value. Example request:
-
-    ```
-    GET /original?short_url=abcd1234
-    ```
-
-    Example response:
-
-    ```json
-    {
-        "response-timestamp": "2024/03/25T00:33:28:570514",
-        "response-data": {
-            "original_url": "https://example.com/very/long/url"
-        }
-    }
-    ```
+  }
+  ```
 
 ## Getting Started
 
