@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "a4ac8376-6d3d-4fb0-b8b8-598c0ba67422",
+		"name": "url-shortener-rest-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28416042"
+	},
+	"item": [
+		{
+			"name": "service-health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/health/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"health",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.12.2"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Mar 2024 19:03:28 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "282"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"response-timestamp\": \"2024/03/25T00:33:28:570514\",\n    \"response-data\": {\n        \"health-check-timestamp\": \"2024/03/25T00:33:28:570464\",\n        \"application-name\": \"URL-SHORTENER-REST-API\",\n        \"application-status\": \"UP\",\n        \"connected-services-health\": []\n    }\n}"
+				}
+			]
+		}
+	]
+}
