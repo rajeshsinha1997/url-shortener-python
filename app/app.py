@@ -27,5 +27,5 @@ class UrlShortenerApplication:
             # call method to create application
             cls.__create_application()
 
-        # return application
+        # return the application
         return cls.__application

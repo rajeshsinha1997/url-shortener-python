@@ -11,15 +11,20 @@ def get_current_time_stamp() -> str:
     return datetime.now().strftime('%Y/%m/%dT%H:%M:%S:%f')
 
 
-# method to build a success response object
-def build_success_response(response_data: object,
-                           response_status_code: int
-                           ) -> Response:
+# method to build a response object
+def build_response(response_data: object,
+                   response_status_code: int) -> Response:
+    # build application response
+    application_response = ApplicationResponse(
+                        current_timestamp=get_current_time_stamp(),
+                        response_data=response_data)
+
+    # create json representation of the application response
+    json_response: str = json.dumps(obj=application_response,
+                                    default=lambda obj: obj.to_json(),
+                                    indent=4)
+
     # return response object with response data
     return Response(content_type='application/json',
                     status=response_status_code,
-                    response=json.dumps(obj=ApplicationResponse(
-                        current_timestamp=get_current_time_stamp(),
-                        response_data=response_data),
-                        default=lambda x: x.__dict__,
-                        indent=4))
+                    response=json_response)

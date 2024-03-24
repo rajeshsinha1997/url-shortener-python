@@ -24,13 +24,13 @@ class ServiceHealthResponse:
                  current_timestamp: str,
                  application_name: str,
                  application_status: str,
-                 connected_service_healths: list['ServiceHealthResponse']
+                 connected_services_health: list['ServiceHealthResponse']
                  ) -> None:
         self.health_check_timestamp: str = current_timestamp
         self.application_name: str = application_name
         self.application_status: str = application_status
-        self.connected_service_healths: list[
-            'ServiceHealthResponse'] = connected_service_healths
+        self.connected_services_health: list[
+            'ServiceHealthResponse'] = connected_services_health
 
     # method to get a json representation of this object
     def to_json(self) -> dict[str, str | object]:
@@ -38,8 +38,7 @@ class ServiceHealthResponse:
             'health-check-timestamp': self.health_check_timestamp,
             'application-name': self.application_name,
             'application-status': self.application_status,
-            'connected-service-health': [connected_service_health.to_json()
-                                         for connected_service_health in
-                                         self.connected_service_healths
-                                         ]
+            'connected-services-health': [connected_service_health.to_json()
+                                          for connected_service_health in
+                                          self.connected_services_health]
         }
