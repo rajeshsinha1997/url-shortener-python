@@ -14,7 +14,7 @@ class ServiceHealthService:
             current_timestamp=get_current_time_stamp(),
             application_name=APPLICATION_NAME,
             application_status=APPLICATION_STATUS_UP,
-            connected_service_healths=[]
+            connected_services_health=[]
             )
 
         # add service-health data of connected services
