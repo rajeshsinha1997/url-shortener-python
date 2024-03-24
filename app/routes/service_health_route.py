@@ -1,4 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, Response
+
+from app.services.service_health_service import ServiceHealthService
+from app.utilities.common_utility import build_success_response
 
 # create blueprint
 service_health_blueprint = Blueprint(name='health',
@@ -8,5 +11,8 @@ service_health_blueprint = Blueprint(name='health',
 
 # define GET endpoint
 @service_health_blueprint.get(rule='/')
-def get_service_health():
-    return 'OK'
+def get_service_health() -> Response:
+    # return service health response
+    return build_success_response(
+        response_data=ServiceHealthService.build_service_health_response(),
+        response_status_code=200)
