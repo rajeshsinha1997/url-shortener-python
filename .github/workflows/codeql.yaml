@@ -48,5 +48,5 @@ jobs:
     - name: Perform CodeQL analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "/language:python"
+        checkout_path: ${{github.workspace}}
 
