@@ -3,7 +3,7 @@ name: Dependency Review
 on:
   pull_request:
     branches:
-        - '**'
+      - "**"
 
 permissions:
   contents: read
@@ -11,12 +11,13 @@ permissions:
 
 jobs:
   dependency-review:
+    name: Dependency Review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4.1.1
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4.2.4 
+        uses: actions/dependency-review-action@v4.2.4
         with:
           comment-summary-in-pr: always
