@@ -11,9 +11,12 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  build:
-    name: Build Python Project And Initialize CodeQL
+  build_and_analyze:
+    name: Build Python Project And Analyze with CodeQL
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
 
     steps:
     - name: Checkout Repository
@@ -34,17 +37,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
 
-  analyze:
-    needs: build
+    - name: Perform CodeQL analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:python"
 
-    name: Analyze with CodeQL
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-
-    steps:
-      - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:python"
