@@ -19,7 +19,7 @@ def get_current_time_stamp() -> str:
     Returns:
         str: The formatted current timestamp.
     """
-  
+
     # return the formatted current datetime
     return datetime.now().strftime('%Y/%m/%dT%H:%M:%S:%f')
 
