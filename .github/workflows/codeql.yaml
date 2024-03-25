@@ -12,11 +12,10 @@ on:
 
 jobs:
   build_and_analyze:
-    name: Build Python Project And Analyze with CodeQL
+    name: Build and Analyze Python Project with CodeQL
     runs-on: ubuntu-latest
 
     permissions:
-      # required for all workflows
       security-events: write
 
     strategy:
