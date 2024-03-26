@@ -1,9 +1,8 @@
 """
 Module: service_health_service
 
-This module defines the ServiceHealthService class, which is responsible for 
-processing the business logics and building the service-health responses for
-the URL shortener application.
+This module is responsible for processing the business logics and building the service-health
+responses for the URL shortener application.
 """
 
 from app.constants.application_constant import APPLICATION_NAME
@@ -12,30 +11,24 @@ from app.models.api.response_model import ServiceHealthResponse
 from app.utilities.common_utility import get_current_time_stamp
 
 
-class ServiceHealthService:
+def build_service_health_response() -> ServiceHealthResponse:
     """
-    Service class for building service-health responses.
+    Build a service-health response object.
+
+    Returns:
+        ServiceHealthResponse: An instance of ServiceHealthResponse representing the
+        service-health response.
     """
 
-    @classmethod
-    def build_service_health_response(cls) -> ServiceHealthResponse:
-        """
-        Build a service-health response object.
+    # build service health response object
+    service_health_response = ServiceHealthResponse(
+        current_timestamp=get_current_time_stamp(),
+        application_name=APPLICATION_NAME,
+        application_status=APPLICATION_STATUS_UP,
+        connected_services_health=[]
+        )
 
-        Returns:
-            ServiceHealthResponse: An instance of ServiceHealthResponse representing 
-                                   the service-health response.
-        """
+    # add service-health data of connected services
 
-        # build service health response object
-        service_health_response = ServiceHealthResponse(
-            current_timestamp=get_current_time_stamp(),
-            application_name=APPLICATION_NAME,
-            application_status=APPLICATION_STATUS_UP,
-            connected_services_health=[]
-            )
-
-        # add service-health data of connected services
-
-        # return service-health response
-        return service_health_response
+    # return service-health response
+    return service_health_response

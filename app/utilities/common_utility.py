@@ -1,8 +1,7 @@
 """
 Module: common_utility
 
-This module provides utility functions for common tasks such as retrieving 
-the current timestamp and building HTTP responses.
+This module provides utility functions for common tasks across the application.
 """
 
 from datetime import datetime

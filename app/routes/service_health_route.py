@@ -1,13 +1,13 @@
 """
 Module: service_health_route
 
-This module defines a Flask Blueprint for handling health check endpoints of the 
+This module defines a Flask Blueprint for handling health check endpoints of the
 URL shortener application.
 """
 
 from flask import Blueprint, Response
 
-from app.services.service_health_service import ServiceHealthService
+from app.services.service_health_service import build_service_health_response
 from app.utilities.common_utility import build_response
 
 # create blueprint
@@ -28,5 +28,5 @@ def get_service_health() -> Response:
 
     # return service health response
     return build_response(
-        response_data=ServiceHealthService.build_service_health_response(),
+        response_data=build_service_health_response(),
         response_status_code=200)
