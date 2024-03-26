@@ -1,9 +1,8 @@
 """
 Module: main
 
-This module serves as the entry point for the URL shortener application.
-It initializes the Flask application and retrieves the application instance
-from the UrlShortenerApplication class.
+This module serves as the entry point for the URL shortener application. It initializes the Flask
+application and retrieves the application instance from the UrlShortenerApplication class.
 """
 
 import os

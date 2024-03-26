@@ -1,8 +1,8 @@
 """
 Module: response_models
 
-This module defines model classes representing different types of responses 
-used in the URL shortener application.
+This module defines model classes representing different types of responses used in the
+URL shortener application.
 """
 
 
@@ -25,6 +25,7 @@ class ApplicationResponse:
             None
 
         """
+
         self.response_timestamp: str = current_timestamp
         self.response_data: object = response_data
 
@@ -33,8 +34,8 @@ class ApplicationResponse:
         Create a JSON representation of an instance of this class.
 
         Returns:
-            dict[str, str | object]: A dictionary containing the JSON 
-                                     representation of the instance.
+            dict[str, str | object]: A dictionary containing the JSON representation of the
+            instance.
         """
 
         # return the json representation of the instance
@@ -62,12 +63,13 @@ class ServiceHealthResponse:
             current_timestamp (str): The timestamp of the health check.
             application_name (str): The name of the application.
             application_status (str): The status of the application.
-            connected_services_health (list[ServiceHealthResponse]): 
-                                    The health status of connected services.
+            connected_services_health (list[ServiceHealthResponse]): The health status of connected
+            services.
 
         Returns:
             None
         """
+
         self.health_check_timestamp: str = current_timestamp
         self.application_name: str = application_name
         self.application_status: str = application_status
@@ -79,8 +81,8 @@ class ServiceHealthResponse:
         Create a JSON representation of an instance of this class.
 
         Returns:
-            dict[str, str | object]: A dictionary containing the JSON 
-                                     representation of the instance.
+            dict[str, str | object]: A dictionary containing the JSON representation of the
+            instance.
 
         """
 

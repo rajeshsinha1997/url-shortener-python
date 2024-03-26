@@ -1,8 +1,8 @@
 """
 Module: app
 
-This module defines the UrlShortenerApplication class, which provides methods for 
-creating and retrieving a Flask application instance for the URL shortener service.
+This module defines the UrlShortenerApplication class, which provides methods for creating, 
+retrieving, and deleting a Flask application instance for the URL shortener service.
 """
 
 from flask import Flask
@@ -45,12 +45,11 @@ class UrlShortenerApplication:
         Retrieve the Flask application instance.
 
         Returns:
-            Flask or None: The Flask application instance if it has been created,
-            otherwise None.
+            Flask or None: The Flask application instance if it has been created, otherwise None.
 
         Notes:
-            If the application has not been created yet, this method will call the 
-            private `__create_application` method to create the application instance.
+            If the application has not been created yet, this method will call the private
+            `__create_application` method to create the application instance.
         """
 
         # check if the application has not been created
