@@ -7,8 +7,9 @@ This module provides utility functions for common tasks across the application.
 from datetime import datetime
 import json
 
-from flask import Response
+from flask import Request, Response
 from app.models.api.response_model import ApplicationResponse
+from app.utilities.validation_utility import does_request_has_json_body
 
 
 def get_current_time_stamp() -> str:
@@ -37,16 +38,44 @@ def build_response(response_data: object,
     """
 
     # build application response
-    application_response = ApplicationResponse(
+    __application_response = ApplicationResponse(
                         current_timestamp=get_current_time_stamp(),
                         response_data=response_data)
 
     # create json representation of the application response
-    json_response: str = json.dumps(obj=application_response,
+    __json_response: str = json.dumps(obj=__application_response,
                                     default=lambda obj: obj.to_json(),
                                     indent=4)
 
     # return response object with response data
     return Response(content_type='application/json',
                     status=response_status_code,
-                    response=json_response)
+                    response=__json_response)
+
+
+def validate_and_get_json_request_body(request: Request) -> dict[str, str] | None:
+    """
+    Validates and retrieves the JSON request body from a Flask HTTP request object.
+
+    Args:
+        request (Request): The Flask HTTP request object.
+
+    Returns:
+        dict[str, str] | None: A dictionary representing the JSON request body if the request
+        is valid and contains JSON data. Otherwise, returns None.
+    """
+
+    # check if flask HTTP request contains a valid json request body
+    if does_request_has_json_body(request=request):
+        # get json request body from flask HTTP request object
+        __json_request_body: dict[str, str] | None = request.get_json(silent=True)
+
+        # check if a valid json request body was parsed and contains at least a single entry
+        if __json_request_body is not None and len(__json_request_body.keys()) > 0:
+            # return parsed json request body
+            return __json_request_body
+        # else return None as result
+        return None
+
+    # else return None as fallback result
+    return None

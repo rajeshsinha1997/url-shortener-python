@@ -13,7 +13,7 @@ from app.utilities.common_utility import build_response
 # create blueprint
 service_health_blueprint = Blueprint(name='health',
                                      import_name=__name__,
-                                     url_prefix='/health/')
+                                     url_prefix='/api/health/')
 
 
 @service_health_blueprint.get(rule='/')
