@@ -32,7 +32,7 @@ def generate_shortened_url() -> Response:
                               response_status_code=400)
 
     # fetch required data from the request body
-    __long_url: str | None = __request_body.get('long_url')
+    __long_url: str | None = __request_body.get('long-url')
 
     # check if the required data was not found in the request body
     if __long_url is None:
