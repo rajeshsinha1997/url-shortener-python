@@ -48,3 +48,18 @@ class DatabaseUtility:
 
             # create database engine
             cls.__engine = create_engine(url=__database_url, echo=True)
+
+    @classmethod
+    def get_database_engine(cls) -> Engine | None:
+        """
+        Get an instance of the database engine.
+        
+        This method just returns the instance of the database engine available in this class,
+        but does not verify whether an engine instance has been created or not.
+        
+        Returns:
+            Instance of the database engine if already created, None otherwise.
+        """
+
+        # return instance of the database engine
+        return cls.__engine

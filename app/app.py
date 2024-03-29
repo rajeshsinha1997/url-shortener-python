@@ -20,7 +20,7 @@ class UrlShortenerApplication:
     __application: Flask | None = None
 
     @classmethod
-    def __create_application(cls) -> None:
+    def create_application(cls) -> None:
         """
         Create the Flask application instance if it has not been created already.
 
@@ -46,18 +46,12 @@ class UrlShortenerApplication:
         """
         Retrieve the Flask application instance.
 
+        This method does not verify if an application instance has been created or not. It
+        just returns the class level instance of the application.
+
         Returns:
             Flask or None: The Flask application instance if it has been created, otherwise None.
-
-        Notes:
-            If the application has not been created yet, this method will call the private
-            `__create_application` method to create the application instance.
         """
-
-        # check if the application has not been created
-        if cls.__application is None:
-            # call method to create application
-            cls.__create_application()
 
         # return the application
         return cls.__application

@@ -1,7 +1,9 @@
 """
 Module: main
 
-This module serves as the entry point for the URL shortener application. It initializes the database, the Flask application and retrieves the application instance from the UrlShortenerApplication class.
+This module serves as the entry point for the URL shortener application. 
+It initializes the database, the Flask application and retrieves the application instance
+from the UrlShortenerApplication class.
 """
 
 import os
@@ -17,6 +19,9 @@ if os.getenv(key='environment') != 'production':
 
 # initialize database
 DatabaseUtility.initialize_database()
+
+# create flask application
+UrlShortenerApplication.create_application()
 
 # call method to get application
 app: Flask | None = UrlShortenerApplication.get_application()
