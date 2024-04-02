@@ -8,7 +8,10 @@ such as shortening a long url, retrieving the original long url from the shorten
 
 from flask import Blueprint, Response, request
 
+from app.services.url_shortener_service import create_short_url_from_long_url
 from app.utilities.common_utility import build_response, validate_and_get_json_request_body
+from app.exceptions.custom_application_exceptions import \
+    DatabaseEngineNotInitializedException, QueryFileNotFoundException
 
 # create blueprint
 url_shortener_blueprint: Blueprint = Blueprint(name='url_shortener',
@@ -40,5 +43,11 @@ def generate_shortened_url() -> Response:
         return build_response(response_data='REQUIRED LONG URL WAS NOT FOUND IN THE REQUEST BODY',
                               response_status_code=400)
 
-    # send success response
-    return build_response(response_data='OK', response_status_code=201)
+    try:
+        # call service function to get the shortened URL and build the response
+        return build_response(response_data=create_short_url_from_long_url(long_url=__long_url),
+                              response_status_code=201)
+    except (QueryFileNotFoundException, DatabaseEngineNotInitializedException):
+        # return corresponding error response
+        return build_response(response_data='SOME INTERNAL ERROR OCCURRED',
+                              response_status_code=500)

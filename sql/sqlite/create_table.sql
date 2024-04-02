@@ -1,0 +1,10 @@
+-- Active: 1711618605121@@127.0.0.1@3306
+DROP TABLE IF EXISTS urls;
+CREATE TABLE IF NOT EXISTS urls (
+    s_url_id VARCHAR(20) PRIMARY KEY,
+    s_url VARCHAR(50) NOT NULL UNIQUE,
+    l_url TEXT UNIQUE NOT NULL,
+    deleted INTEGER NOT NULL,
+    created_at VARCHAR(20) NOT NULL,
+    deleted_at VARCHAR(20)
+);

@@ -4,13 +4,15 @@ Module: database_utility
 This module provides a utility class for managing database connections and operations.
 """
 
+
 import os
+from abc import ABC
 from sqlalchemy import Engine, create_engine
 
-from app.exceptions.application_initialization_exception import ApplicationInitializationException
+from app.exceptions.custom_application_exceptions import ApplicationInitializationException
 
 
-class DatabaseUtility:
+class DatabaseUtility(ABC):
     """
     Utility class for managing database connections and operations.
     """
