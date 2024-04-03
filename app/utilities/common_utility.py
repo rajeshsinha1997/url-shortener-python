@@ -5,6 +5,7 @@ This module provides utility functions for common tasks across the application.
 """
 
 from datetime import datetime
+from hashlib import sha512
 import json
 
 from flask import Request, Response
@@ -21,7 +22,7 @@ def get_current_time_stamp() -> str:
     """
 
     # return the formatted current datetime
-    return datetime.now().strftime('%Y/%m/%dT%H:%M:%S:%f')
+    return datetime.now().strftime(format='%Y/%m/%dT%H:%M:%S:%f')
 
 
 def build_response(response_data: object,
@@ -53,9 +54,9 @@ def build_response(response_data: object,
                     response=__json_response)
 
 
-def validate_and_get_json_request_body(request: Request) -> dict[str, str] | None:
+def get_json_request_body(request: Request) -> dict[str, str] | None:
     """
-    Validates and retrieves the JSON request body from a Flask HTTP request object.
+    Retrieves the JSON request body from a Flask HTTP request object.
 
     Args:
         request (Request): The Flask HTTP request object.
@@ -79,3 +80,37 @@ def validate_and_get_json_request_body(request: Request) -> dict[str, str] | Non
 
     # else return None as fallback result
     return None
+
+
+def generate_hashed_value_from_string(source: str, hash_length: int | None = None) -> str:
+    """
+    Generate a hashed value from a given string
+    
+    Parameters:
+        source (str): The source string value which will be hashed
+        hash_length (int | None): required length of the hashed representation of the given string
+
+    Returns:
+        hashed representation as string of the given string value truncated to the required length
+        value provided, if no length value is provided then the complete hashed representation is
+        returned as a string.
+    """
+
+    # encode the given string
+    __encoded_string: bytes = source.encode(encoding='UTF-8', errors='ignore')
+
+    # create hash object of the given string value
+    __hash_obj: object = sha512()
+
+    # update the hash object with the encoded string value
+    __hash_obj.update(__encoded_string)
+
+    # retrieve the hashed representation as string from the hash object
+    __hashed_value: str = __hash_obj.hexdigest()
+
+    # check if any length value has been provided and it is a valid length value
+    if hash_length is not None and 0 < hash_length < 128:
+        # truncate the hashed string to the required length and return the value
+        return __hashed_value[:hash_length]
+    # else return the complete hashed representation of the given string value
+    return __hashed_value

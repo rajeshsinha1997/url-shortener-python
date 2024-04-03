@@ -9,7 +9,7 @@ such as shortening a long url, retrieving the original long url from the shorten
 from flask import Blueprint, Response, request
 
 from app.services.url_shortener_service import create_short_url_from_long_url
-from app.utilities.common_utility import build_response, validate_and_get_json_request_body
+from app.utilities.common_utility import build_response, get_json_request_body
 from app.exceptions.custom_application_exceptions import \
     DatabaseEngineNotInitializedException, QueryFileNotFoundException
 
@@ -26,7 +26,7 @@ def generate_shortened_url() -> Response:
     """
 
     # validate and extract json request body from flask HTTP request
-    __request_body: dict[str, str] | None = validate_and_get_json_request_body(request=request)
+    __request_body: dict[str, str] | None = get_json_request_body(request=request)
 
     # check if request body is not a valid json request body
     if __request_body is None:
