@@ -1,325 +1,283 @@
 {
-	"info": {
-		"_postman_id": "a4ac8376-6d3d-4fb0-b8b8-598c0ba67422",
-		"name": "url-shortener-rest-api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28416042"
-	},
-	"item": [
-		{
-			"name": "service-health",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/health/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"health",
-						""
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "200 - success",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/health/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"health",
-								""
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/3.0.1 Python/3.12.2"
-						},
-						{
-							"key": "Date",
-							"value": "Wed, 27 Mar 2024 18:44:47 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "282"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"response-timestamp\": \"2024/03/28T00:14:47:900227\",\n    \"response-data\": {\n        \"health-check-timestamp\": \"2024/03/28T00:14:47:900087\",\n        \"application-name\": \"URL-SHORTENER-REST-API\",\n        \"application-status\": \"UP\",\n        \"connected-services-health\": []\n    }\n}"
-				}
-			]
-		},
-		{
-			"name": "New Request",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"long-url\": \"a valid long url\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/api/shorten/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"shorten",
-						""
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "400 - no request body",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/shorten/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"shorten",
-								""
-							]
-						}
-					},
-					"status": "BAD REQUEST",
-					"code": 400,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/3.0.1 Python/3.12.2"
-						},
-						{
-							"key": "Date",
-							"value": "Wed, 27 Mar 2024 20:17:16 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "122"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"response-timestamp\": \"2024/03/28T01:47:16:004547\",\n    \"response-data\": \"A VALID JSON REQUEST BODY WAS NOT FOUND\"\n}"
-				},
-				{
-					"name": "400 - non json request body",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "text"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/shorten/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"shorten",
-								""
-							]
-						}
-					},
-					"status": "BAD REQUEST",
-					"code": 400,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/3.0.1 Python/3.12.2"
-						},
-						{
-							"key": "Date",
-							"value": "Wed, 27 Mar 2024 20:17:44 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "122"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"response-timestamp\": \"2024/03/28T01:47:44:095140\",\n    \"response-data\": \"A VALID JSON REQUEST BODY WAS NOT FOUND\"\n}"
-				},
-				{
-					"name": "400 - empty json request body",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/shorten/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"shorten",
-								""
-							]
-						}
-					},
-					"status": "BAD REQUEST",
-					"code": 400,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/3.0.1 Python/3.12.2"
-						},
-						{
-							"key": "Date",
-							"value": "Wed, 27 Mar 2024 20:18:05 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "122"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"response-timestamp\": \"2024/03/28T01:48:05:457874\",\n    \"response-data\": \"A VALID JSON REQUEST BODY WAS NOT FOUND\"\n}"
-				},
-				{
-					"name": "400 - invalid or undefined value for long url",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"long-url\": null\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/shorten/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"shorten",
-								""
-							]
-						}
-					},
-					"status": "BAD REQUEST",
-					"code": 400,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Server",
-							"value": "Werkzeug/3.0.1 Python/3.12.2"
-						},
-						{
-							"key": "Date",
-							"value": "Wed, 27 Mar 2024 20:18:35 GMT"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Content-Length",
-							"value": "134"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"response-timestamp\": \"2024/03/28T01:48:35:657735\",\n    \"response-data\": \"REQUIRED LONG URL WAS NOT FOUND IN THE REQUEST BODY\"\n}"
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "a4ac8376-6d3d-4fb0-b8b8-598c0ba67422",
+    "name": "url-shortener-rest-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28416042"
+  },
+  "item": [
+    {
+      "name": "service-health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/health/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "health", ""]
+        }
+      },
+      "response": [
+        {
+          "name": "200 - success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/health/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "health", ""]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.0.1 Python/3.12.2"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 27 Mar 2024 18:44:47 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "282"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"response-timestamp\": \"2024/03/28T00:14:47:900227\",\n    \"response-data\": {\n        \"health-check-timestamp\": \"2024/03/28T00:14:47:900087\",\n        \"application-name\": \"URL-SHORTENER-REST-API\",\n        \"application-status\": \"UP\",\n        \"connected-services-health\": []\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"long-url\": \"a valid long url\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/shorten/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "shorten", ""]
+        }
+      },
+      "response": [
+        {
+          "name": "400 - no request body",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/shorten/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shorten", ""]
+            }
+          },
+          "status": "BAD REQUEST",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.0.1 Python/3.12.2"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 27 Mar 2024 20:17:16 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "122"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"response-timestamp\": \"2024/03/28T01:47:16:004547\",\n    \"response-data\": \"A VALID JSON REQUEST BODY WAS NOT FOUND\"\n}"
+        },
+        {
+          "name": "400 - non json request body",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/shorten/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shorten", ""]
+            }
+          },
+          "status": "BAD REQUEST",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.0.1 Python/3.12.2"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 27 Mar 2024 20:17:44 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "122"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"response-timestamp\": \"2024/03/28T01:47:44:095140\",\n    \"response-data\": \"A VALID JSON REQUEST BODY WAS NOT FOUND\"\n}"
+        },
+        {
+          "name": "400 - empty json request body",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/shorten/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shorten", ""]
+            }
+          },
+          "status": "BAD REQUEST",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.0.1 Python/3.12.2"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 27 Mar 2024 20:18:05 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "122"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"response-timestamp\": \"2024/03/28T01:48:05:457874\",\n    \"response-data\": \"A VALID JSON REQUEST BODY WAS NOT FOUND\"\n}"
+        },
+        {
+          "name": "400 - invalid or undefined value for long url",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"long-url\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/shorten/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shorten", ""]
+            }
+          },
+          "status": "BAD REQUEST",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.0.1 Python/3.12.2"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 27 Mar 2024 20:18:35 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "134"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"response-timestamp\": \"2024/03/28T01:48:35:657735\",\n    \"response-data\": \"REQUIRED LONG URL WAS NOT FOUND IN THE REQUEST BODY\"\n}"
+        }
+      ]
+    }
+  ]
 }
