@@ -9,7 +9,7 @@ business logics for the url shortening service.
 import os
 from app.models.db.database_model import UrlDatabaseRecord
 from app.repositories.url_shortener_repository import \
-    add_shortened_url_record, find_record_by_long_url
+    add_shortened_url_record, find_record_by_long_url, update_record_deleted_status
 from app.utilities.common_utility import generate_hashed_value_from_string, get_current_time_stamp
 
 
@@ -48,10 +48,10 @@ def create_short_url_from_long_url(long_url: str) -> str:
 
     # check if the existing record has been deleted already
     if __existing_record.deleted:
-        # mark the existing record as not deleted
-        __existing_record.deleted = False
-
-        # make update on the database
+        # update the existing record as not deleted on the database
+        update_record_deleted_status(
+            short_url=__existing_record.short_url,
+            deleted=False)
 
     # return the existing shortened url
     return __existing_record.short_url

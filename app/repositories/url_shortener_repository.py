@@ -12,7 +12,7 @@ from sqlalchemy import Engine, Row, text
 from app.models.db.database_model import UrlDatabaseRecord
 from app.utilities.database_utility import DatabaseUtility
 from app.constants.sql_query_file_path_constant import \
-    FIND_RECORD_BY_LONG_URL, INSERT_SHORT_URL
+    FIND_RECORD_BY_LONG_URL, INSERT_SHORT_URL, UPDATE_RECORD_DELETED_STATUS
 from app.exceptions.custom_application_exceptions import \
     DatabaseEngineNotInitializedException, QueryFileNotFoundException
 
@@ -125,6 +125,41 @@ def add_shortened_url_record(record_to_add: UrlDatabaseRecord) -> None:
                             'l_url': record_to_add.long_url,
                             'deleted': 1 if record_to_add.deleted else 0,
                             'created_at': record_to_add.created_on}
+                )
+    # else raise corresponding exception
+    else:
+        raise DatabaseEngineNotInitializedException()
+
+
+def update_record_deleted_status(short_url: str, deleted: bool) -> None:
+    """
+    Update the 'deleted' status of an existing URL record in the database
+
+    Parameters:
+        short_url (str): short URL value to find the existing URL record
+        deleted (bool): updated value of the 'deleted' status
+
+    Returns:
+        None
+    """
+
+    # get instance of the database engine
+    __engine: Engine | None = DatabaseUtility.get_database_engine()
+
+    # check if an instance of engine was received
+    if __engine is not None:
+        # fetch sql query from file
+        __query_str: str = __get_sql_query_from_file(file_path=UPDATE_RECORD_DELETED_STATUS)
+
+        # open context manager
+        with __engine.begin() as connection:
+            # execute sql query with corresponding parameters
+            connection.execute(
+                statement=text(text=__query_str),
+                parameters={
+                    'deleted': 1 if deleted else 0,
+                    's_url': short_url
+                    }
                 )
     # else raise corresponding exception
     else:
