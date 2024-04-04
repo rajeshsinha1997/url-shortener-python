@@ -91,9 +91,9 @@ def generate_hashed_value_from_string(source: str, hash_length: int | None = Non
         hash_length (int | None): required length of the hashed representation of the given string
 
     Returns:
-        hashed representation as string of the given string value truncated to the required length
-        value provided, if no length value is provided then the complete hashed representation is
-        returned as a string.
+        str: hashed representation as string of the given string value truncated to the required
+        length value provided, if no length value is provided then the complete hashed
+        representation is returned as a string.
     """
 
     # encode the given string

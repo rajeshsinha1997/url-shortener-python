@@ -23,7 +23,6 @@ def get_service_health() -> Response:
 
     Returns:
         Response: HTTP response containing the service health data.
-
     """
 
     # return service health response

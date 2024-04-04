@@ -22,7 +22,10 @@ url_shortener_blueprint: Blueprint = Blueprint(name='url_shortener',
 @url_shortener_blueprint.post(rule='/shorten/')
 def generate_shortened_url() -> Response:
     """
-    Handles the POST request
+    Handler for the POST /api/shorten/ endpoint
+
+    Returns:
+        Response: HTTP response containing the shortened URL value.
     """
 
     # validate and extract json request body from flask HTTP request

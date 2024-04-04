@@ -1,7 +1,8 @@
 """
 Module: url_shortener_repository
 
-This module provides functions which allow us to interact with the database.
+This module provides functions which allow us to interact with the database
+related to url shortening functionality.
 """
 
 
@@ -51,7 +52,7 @@ def find_record_by_long_url(long_url: str) -> UrlDatabaseRecord | None:
 
     Returns:
         UrlDatabaseRecord: An instance of UrlDatabaseRecord, containing all required
-        data from the database record found.
+        data from the database record if found any, else None.
 
     Raises:
         DatabaseEngineNotInitializedException: If the database engine is not initialized.
@@ -99,6 +100,9 @@ def add_shortened_url_record(record_to_add: UrlDatabaseRecord) -> None:
     Parameters:
         record_to_add (UrlDatabaseRecord): An instance of UrlDatabaseRecord containing
         all required data to be added to the database.
+
+    Returns:
+        None
 
     Raises:
         DatabaseEngineNotInitializedException: If the database engine is not initialized.

@@ -18,10 +18,10 @@ def create_short_url_from_long_url(long_url: str) -> str:
     Create a shortened URL from the provided long URL value
 
     Parameters:
-        long_url: long URL required to be shortened
+        long_url (str): the long URL required to be shortened
 
     Returns:
-        shortened version of the provided long URL as string
+        str: shortened version of the provided long URL as string
     """
 
     # find an existing record corresponding to the given long URL
