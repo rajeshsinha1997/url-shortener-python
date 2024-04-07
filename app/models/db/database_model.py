@@ -16,18 +16,24 @@ class UrlData:
     and creation timestamp.
     """
 
-    def __init__(self, short_url: str, long_url: str, created_on: str, last_used_on: str) -> None:
+    def __init__(self, short_url: str,
+                 long_url: str,
+                 long_url_hash: str,
+                 created_on: str,
+                 last_used_on: str) -> None:
         """
         Initialize a new URL record instance.
 
         Parameters:
             short_url (str): The shortened URL.
             long_url (str): The original long URL.
+            long_url_hash (str): Hash value for the original long URL.
             created_on (str): The timestamp when the record was created.
             last_used_on (str): The timestamp when this shortened URL was last used
         """
 
         self.short_url: str = short_url
         self.long_url: str = long_url
+        self.long_url_hash: str = long_url_hash
         self.created_on: str = created_on
         self.last_used_on: str = last_used_on

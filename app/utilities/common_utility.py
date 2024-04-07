@@ -5,7 +5,7 @@ This module provides utility functions for common tasks across the application.
 """
 
 from datetime import datetime
-from hashlib import sha512
+from hashlib import new
 import json
 import os
 
@@ -88,38 +88,27 @@ def get_json_request_body(request: Request) -> dict[str, str] | None:
     return None
 
 
-def generate_hashed_value_from_string(source: str, hash_length: int | None = None) -> str:
+def generate_hash_from_string(input_string: str, algorithm: str='sha256') -> str:
     """
-    Generate a hashed value from a given string
-    
-    Parameters:
-        source (str): The source string value which will be hashed
-        hash_length (int | None): required length of the hashed representation of the given string
+    Generate the hash of a given string using the specified algorithm.
+
+    Args:
+    - input_string (str): The string to generate the hash for.
+    - algorithm (str): The hash algorithm to use (default is 'sha256').
+                       Other options include 'md5', 'sha1', 'sha224', 'sha256',
+                       'sha384', 'sha512', depending on hashlib supported algorithms.
 
     Returns:
-        str: hashed representation as string of the given string value truncated to the required
-        length value provided, if no length value is provided then the complete hashed
-        representation is returned as a string.
+    - str: The hash of the input string.
     """
+    # Create a hash object using the specified algorithm
+    __hash_object: object = new(name=algorithm)
 
-    # encode the given string
-    __encoded_string: bytes = source.encode(encoding='UTF-8', errors='ignore')
+    # Update the hash object with the input string
+    __hash_object.update(input_string.encode())
 
-    # create hash object of the given string value
-    __hash_obj: object = sha512()
-
-    # update the hash object with the encoded string value
-    __hash_obj.update(__encoded_string)
-
-    # retrieve the hashed representation as string from the hash object
-    __hashed_value: str = __hash_obj.hexdigest()
-
-    # check if any length value has been provided and it is a valid length value
-    if hash_length is not None and 0 < hash_length < 128:
-        # truncate the hashed string to the required length and return the value
-        return __hashed_value[:hash_length]
-    # else return the complete hashed representation of the given string value
-    return __hashed_value
+    # generate and return hash in hexadecimal format
+    return __hash_object.hexdigest()
 
 
 def get_sql_query_from_file(file_path: str) -> str:

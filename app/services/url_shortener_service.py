@@ -11,8 +11,9 @@ import random
 import uuid
 
 from app.models.db.database_model import UrlData
-from app.repositories.url_shortener_repository import add_shortened_url_record
-from app.utilities.common_utility import get_current_time_stamp
+from app.repositories.url_shortener_repository import \
+    add_shortened_url_record, find_short_url_value_by_long_url_hash
+from app.utilities.common_utility import generate_hash_from_string, get_current_time_stamp
 
 
 def __generate_shortened_url(length: int) -> str:
@@ -56,7 +57,18 @@ def create_short_url_from_long_url(long_url: str) -> str:
         str: shortened version of the provided long URL as string
     """
 
-    # check if the same long url has already been shortened
+    # generate hash of the given long url
+    __long_url_hash: str = generate_hash_from_string(input_string=long_url)
+
+    # find an existing short url for the given long url
+    __existing_short_url: str | None = find_short_url_value_by_long_url_hash(
+        long_url_hash=__long_url_hash
+        )
+
+    # check if any existing short url was found
+    if __existing_short_url is not None:
+        # return the existing short url
+        return __existing_short_url
 
     # get required length of the shortened url
     __short_url_length: str = os.environ.get('SHORT_URL_STRING_LENGTH') or '7'
@@ -68,6 +80,7 @@ def create_short_url_from_long_url(long_url: str) -> str:
     add_shortened_url_record(record_to_add=UrlData(
         short_url=__shortened_url,
         long_url=long_url,
+        long_url_hash=__long_url_hash,
         created_on=get_current_time_stamp(),
         last_used_on=get_current_time_stamp(),
     ))
