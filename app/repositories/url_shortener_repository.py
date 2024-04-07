@@ -6,41 +6,15 @@ related to url shortening functionality.
 """
 
 
-import os
 from typing import Any
 from sqlalchemy import Engine, Row, text
 from app.models.db.database_model import UrlDatabaseRecord
+from app.utilities.common_utility import get_sql_query_from_file
 from app.utilities.database_utility import DatabaseUtility
 from app.constants.sql_query_file_path_constant import \
     FIND_RECORD_BY_LONG_URL, INSERT_SHORT_URL, UPDATE_RECORD_DELETED_STATUS
 from app.exceptions.custom_application_exceptions import \
-    DatabaseEngineNotInitializedException, QueryFileNotFoundException
-
-
-def __get_sql_query_from_file(file_path: str) -> str:
-    """
-    Get SQL query from a file.
-
-    Parameters:
-        file_path (str): The path to the file containing SQL query.
-
-    Returns:
-        str: The SQL query retrieved from the file.
-
-    Raises:
-        QueryFileNotFoundException: If the provided file path does not exist.
-    """
-
-    # check if the provided file path exists
-    if os.path.exists(path=file_path):
-        # open file present at the provided path in reading mode
-        with open(file=file_path, mode='r', encoding='UTF-8') as query:
-            # return the contents of the file into a variable
-            return query.read()
-    # else throw corresponding error
-    else:
-        raise QueryFileNotFoundException(
-            exception_message=f'INVALID SQL QUERY FILE PATH: {file_path}')
+    DatabaseEngineNotInitializedException
 
 
 def find_record_by_long_url(long_url: str) -> UrlDatabaseRecord | None:
@@ -64,7 +38,7 @@ def find_record_by_long_url(long_url: str) -> UrlDatabaseRecord | None:
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        __query_str: str = __get_sql_query_from_file(
+        __query_str: str = get_sql_query_from_file(
                     file_path=FIND_RECORD_BY_LONG_URL)
 
         # open context manager
@@ -114,7 +88,7 @@ def add_shortened_url_record(record_to_add: UrlDatabaseRecord) -> None:
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        __query_str: str = __get_sql_query_from_file(file_path=INSERT_SHORT_URL)
+        __query_str: str = get_sql_query_from_file(file_path=INSERT_SHORT_URL)
 
         # open context manager
         with __engine.begin() as connection:
@@ -149,7 +123,7 @@ def update_record_deleted_status(short_url: str, deleted: bool) -> None:
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        __query_str: str = __get_sql_query_from_file(file_path=UPDATE_RECORD_DELETED_STATUS)
+        __query_str: str = get_sql_query_from_file(file_path=UPDATE_RECORD_DELETED_STATUS)
 
         # open context manager
         with __engine.begin() as connection:

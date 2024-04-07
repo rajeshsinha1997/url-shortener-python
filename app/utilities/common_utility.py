@@ -7,8 +7,10 @@ This module provides utility functions for common tasks across the application.
 from datetime import datetime
 from hashlib import sha512
 import json
+import os
 
 from flask import Request, Response
+from app.exceptions.custom_application_exceptions import QueryFileNotFoundException
 from app.models.api.response_model import ApplicationResponse
 from app.utilities.validation_utility import does_request_has_json_body
 
@@ -114,3 +116,29 @@ def generate_hashed_value_from_string(source: str, hash_length: int | None = Non
         return __hashed_value[:hash_length]
     # else return the complete hashed representation of the given string value
     return __hashed_value
+
+
+def get_sql_query_from_file(file_path: str) -> str:
+    """
+    Get SQL query from a file.
+
+    Parameters:
+        file_path (str): The path to the file containing SQL query.
+
+    Returns:
+        str: The SQL query retrieved from the file.
+
+    Raises:
+        QueryFileNotFoundException: If the provided file path does not exist.
+    """
+
+    # check if the provided file path exists
+    if os.path.exists(path=file_path):
+        # open file present at the provided path in reading mode
+        with open(file=file_path, mode='r', encoding='UTF-8') as query:
+            # return the contents of the file into a variable
+            return query.read()
+    # else throw corresponding error
+    else:
+        raise QueryFileNotFoundException(
+            exception_message=f'INVALID SQL QUERY FILE PATH: {file_path}')

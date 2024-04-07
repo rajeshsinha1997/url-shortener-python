@@ -53,6 +53,7 @@ class ServiceHealthResponse:
     def __init__(self,
                  current_timestamp: str,
                  application_name: str,
+                 application_version: str,
                  application_status: str,
                  connected_services_health: list['ServiceHealthResponse']
                  ) -> None:
@@ -62,6 +63,7 @@ class ServiceHealthResponse:
         Args:
             current_timestamp (str): The timestamp of the health check.
             application_name (str): The name of the application.
+            application_version (str): current version of the application
             application_status (str): The status of the application.
             connected_services_health (list[ServiceHealthResponse]): The health status of connected
             services.
@@ -72,6 +74,7 @@ class ServiceHealthResponse:
 
         self.health_check_timestamp: str = current_timestamp
         self.application_name: str = application_name
+        self.application_version: str = application_version
         self.application_status: str = application_status
         self.connected_services_health: list[
             'ServiceHealthResponse'] = connected_services_health
@@ -90,6 +93,7 @@ class ServiceHealthResponse:
         return {
             'health-check-timestamp': self.health_check_timestamp,
             'application-name': self.application_name,
+            'application_version': self.application_version,
             'application-status': self.application_status,
             'connected-services-health': [connected_service_health.to_json()
                                           for connected_service_health in
