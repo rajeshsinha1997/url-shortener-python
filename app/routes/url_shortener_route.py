@@ -50,7 +50,7 @@ def generate_shortened_url() -> Response:
     # check if the received data is not a valid url
     if not is_valid_url(input_url=__long_url):
         # send corresponding error response
-        return build_response(response_data=f'INVALID URL: {__long_url}',
+        return build_response(response_data=f'INVALID LONG URL: {__long_url}',
                               response_status_code=400)
 
     try:

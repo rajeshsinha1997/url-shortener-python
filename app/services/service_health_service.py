@@ -2,7 +2,7 @@
 Module: service_health_service
 
 This module is responsible for processing the business logics and building the service-health
-responses for the URL shortener application.
+responses for the URL shortener application and the connected external services.
 """
 
 from sqlalchemy.exc import OperationalError
@@ -41,7 +41,7 @@ def __get_database_service_health() -> ServiceHealthResponse:
 
         # check if database information was found
         if __database_info is not None:
-            # split the database information by spaces and update the
+            # split the database information by spaces
             __database_information_list: list[str] = __database_info.split()
 
             # update the database name in the service health data object

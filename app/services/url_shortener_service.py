@@ -21,7 +21,7 @@ def __generate_shortened_url(length: int) -> str:
     Generate a shortened URL by combining random characters from a UUID string
     with the current date in the format DDMMYY.
 
-    Args:
+    Parameters:
         length (int): The length of the random string to generate.
 
     Returns:
@@ -31,7 +31,7 @@ def __generate_shortened_url(length: int) -> str:
     # generate a random uuid string and remove hyphens
     __uuid_string: str = str(object=uuid.uuid4()).replace('-', '')
 
-    # select any random 7 characters from the uuid string
+    # select any random characters for a specific count from the uuid string
     __random_string: str = ''.join(random.sample(
         population=__uuid_string,
         k=length))
@@ -58,7 +58,9 @@ def create_short_url_from_long_url(long_url: str) -> str:
     """
 
     # generate hash of the given long url
-    __long_url_hash: str = generate_hash_from_string(input_string=long_url)
+    __long_url_hash: str = generate_hash_from_string(
+        input_string=long_url,
+        algorithm=os.environ.get('LONG_URL_HASH_ALGORITHM') or 'md5')
 
     # find an existing short url for the given long url
     __existing_short_url: str | None = find_short_url_value_by_long_url_hash(
