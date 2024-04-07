@@ -101,10 +101,18 @@ def generate_hash_from_string(input_string: str, algorithm: str='sha256') -> str
     Returns:
     - str: The hash of the input string.
     """
-    # Create a hash object using the specified algorithm
-    __hash_object: object = new(name=algorithm)
 
-    # Update the hash object with the input string
+    # declare hash object
+    __hash_object: object | None = None
+
+    try:
+        # initialize the hash object using the specified algorithm
+        __hash_object = new(name=algorithm)
+    except ValueError:
+        # initialize the hash object using the default algorithm
+        __hash_object = new(name='sha256')
+
+    # update the hash object with the input string
     __hash_object.update(input_string.encode())
 
     # generate and return hash in hexadecimal format
