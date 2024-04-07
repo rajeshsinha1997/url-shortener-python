@@ -27,11 +27,12 @@ def __get_database_service_health() -> ServiceHealthResponse:
 
     # create database service health data object
     __connected_database_health: ServiceHealthResponse = ServiceHealthResponse(
-        current_timestamp=get_current_time_stamp(),
-        application_name='DATABASE',
-        application_version='',
-        application_status=APPLICATION_STATUS_DOWN,
-        connected_services_health=[])
+        params={
+            'current_timestamp': get_current_time_stamp(),
+            'application_name': 'DATABASE',
+            'application_version': '',
+            'application_status': APPLICATION_STATUS_DOWN
+        })
 
     # try to access the database
     try:
@@ -70,12 +71,12 @@ def build_service_health_response() -> ServiceHealthResponse:
 
     # build service health response object
     __service_health_response = ServiceHealthResponse(
-        current_timestamp=get_current_time_stamp(),
-        application_name=APPLICATION_NAME,
-        application_version='0.0.1',
-        application_status=APPLICATION_STATUS_UP,
-        connected_services_health=[]
-        )
+        params={
+            'current_timestamp': get_current_time_stamp(),
+            'application_name': APPLICATION_NAME,
+            'application_version': '0.0.1',
+            'application_status': APPLICATION_STATUS_UP
+        })
 
     # add service-health data of connected database services
     __service_health_response.connected_services_health.append(

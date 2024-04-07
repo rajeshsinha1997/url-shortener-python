@@ -78,12 +78,13 @@ def create_short_url_from_long_url(long_url: str) -> str:
 
     # add generated shortened url data to the database
     add_shortened_url_record(record_to_add=UrlData(
-        short_url=__shortened_url,
-        long_url=long_url,
-        long_url_hash=__long_url_hash,
-        created_on=get_current_time_stamp(),
-        last_used_on=get_current_time_stamp(),
-    ))
+        params={
+            'short_url': __shortened_url,
+            'long_url': long_url,
+            'long_url_hash': __long_url_hash,
+            'created_on': get_current_time_stamp(),
+            'last_used_on': get_current_time_stamp(),
+        }))
 
     # return generated shortened url
     return __shortened_url

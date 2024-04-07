@@ -16,24 +16,48 @@ class UrlData:
     and creation timestamp.
     """
 
-    def __init__(self, short_url: str,
-                 long_url: str,
-                 long_url_hash: str,
-                 created_on: str,
-                 last_used_on: str) -> None:
+    def __init__(self, params: dict[str, str]) -> None:
         """
         Initialize a new URL record instance.
 
         Parameters:
-            short_url (str): The shortened URL.
-            long_url (str): The original long URL.
-            long_url_hash (str): Hash value for the original long URL.
-            created_on (str): The timestamp when the record was created.
-            last_used_on (str): The timestamp when this shortened URL was last used
+            params (dict): A dictionary containing the following key-value pairs:
+                - 'short_url' (str): The shortened URL.
+                - 'long_url' (str): The original long URL.
+                - 'long_url_hash' (str): Hash value for the original long URL.
+                - 'created_on' (str): The timestamp when the record was created.
+                - 'last_used_on' (str): The timestamp when this shortened URL was
+                                        last used.
         """
 
-        self.short_url: str = short_url
-        self.long_url: str = long_url
-        self.long_url_hash: str = long_url_hash
-        self.created_on: str = created_on
-        self.last_used_on: str = last_used_on
+        self.short_url: str = params['short_url']
+        self.long_url: str = params['long_url']
+        self.long_url_hash: str = params['long_url_hash']
+        self.created_on: str = params['created_on']
+        self.last_used_on: str = params['last_used_on']
+
+    def __str__(self) -> str:
+        """
+        Return a string representation of the object.
+
+        Returns:
+            str: A string representation of the object.
+        """
+
+        return (
+            f'Short URL: {self.short_url}'
+            f'Long URL: {self.long_url}'
+            f'Long URL Hash: {self.long_url_hash}'
+            f'Created On: {self.created_on}'
+            f'Last Used On: {self.last_used_on}'
+        )
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the object.
+
+        Returns:
+            str: A string representation of the object.
+        """
+
+        return self.__str__()

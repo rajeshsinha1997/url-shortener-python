@@ -29,6 +29,19 @@ class ApplicationResponse:
         self.response_timestamp: str = current_timestamp
         self.response_data: object = response_data
 
+    def __str__(self) -> str:
+        """
+        Return a string representation of the object.
+
+        Returns:
+            str: A string representation of the object.
+        """
+
+        return (
+            f'Response Timestamp: {self.response_timestamp}'
+            f'Response Data: {self.response_data}'
+        )
+
     def to_json(self) -> dict[str, str | object]:
         """
         Create a JSON representation of an instance of this class.
@@ -51,40 +64,49 @@ class ServiceHealthResponse:
     """
 
     def __init__(self,
-                 current_timestamp: str,
-                 application_name: str,
-                 application_version: str,
-                 application_status: str,
-                 connected_services_health: list['ServiceHealthResponse']
+                 params: dict[str, str],
                  ) -> None:
         """
         Constructor for the ServiceHealthResponse class.
 
-        Args:
-            current_timestamp (str): The timestamp of the health check.
-            application_name (str): The name of the application.
-            application_version (str): current version of the application
-            application_status (str): The status of the application.
-            connected_services_health (list[ServiceHealthResponse]): The health status of connected
-            services.
+        Parameters:
+            params (dict): A dictionary containing the following key-value pairs:
+                - 'current_timestamp' (str): The timestamp of the health check.
+                - 'application_name' (str): The name of the application.
+                - 'application_version' (str): The current version of the application.
+                - 'application_status' (str): The status of the application.
 
         Returns:
             None
         """
 
-        self.health_check_timestamp: str = current_timestamp
-        self.application_name: str = application_name
-        self.application_version: str = application_version
-        self.application_status: str = application_status
-        self.connected_services_health: list[
-            'ServiceHealthResponse'] = connected_services_health
+        self.health_check_timestamp: str = params['current_timestamp']
+        self.application_name: str = params['application_name']
+        self.application_version: str = params['application_version']
+        self.application_status: str = params['application_status']
+        self.connected_services_health: list['ServiceHealthResponse'] = []
 
-    def to_json(self) -> dict[str, str | object]:
+    def __str__(self) -> str:
+        """
+        Return a string representation of the object.
+
+        Returns:
+            str: A string representation of the object.
+        """
+
+        return (
+            f'Health Check Timestamp: {self.health_check_timestamp}\n'
+            f'Application Name: {self.application_name}\n'
+            f'Application Version: {self.application_version}\n'
+            f'Application Status: {self.application_status}\n'
+        )
+
+    def to_json(self) -> dict[str, object]:
         """
         Create a JSON representation of an instance of this class.
 
         Returns:
-            dict[str, str | object]: A dictionary containing the JSON representation of the
+            dict[str, object]: A dictionary containing the JSON representation of the
             instance.
 
         """
