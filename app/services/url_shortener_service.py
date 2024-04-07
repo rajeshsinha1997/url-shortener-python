@@ -7,10 +7,42 @@ business logics for the url shortening service.
 
 
 import os
-from app.models.db.database_model import UrlDatabaseRecord
-from app.repositories.url_shortener_repository import \
-    add_shortened_url_record, find_record_by_long_url, update_record_deleted_status
-from app.utilities.common_utility import generate_hashed_value_from_string, get_current_time_stamp
+import random
+import uuid
+
+from app.models.db.database_model import UrlData
+from app.repositories.url_shortener_repository import add_shortened_url_record
+from app.utilities.common_utility import get_current_time_stamp
+
+
+def __generate_shortened_url(length: int) -> str:
+    """
+    Generate a shortened URL by combining random characters from a UUID string
+    with the current date in the format DDMMYY.
+
+    Args:
+        length (int): The length of the random string to generate.
+
+    Returns:
+        str: The shortened URL composed of random characters and the current date.
+    """
+
+    # generate a random uuid string and remove hyphens
+    __uuid_string: str = str(object=uuid.uuid4()).replace('-', '')
+
+    # select any random 7 characters from the uuid string
+    __random_string: str = ''.join(random.sample(
+        population=__uuid_string,
+        k=length))
+
+    # get the current date in the format DDMMYY (Day-Month-Year)
+    __current_date: str = get_current_time_stamp(output_format='%d%m%y')
+
+    # combine the random string and current date to create the shortened URL
+    __shortened_url: str = f"{__random_string}{__current_date}"
+
+    # return the shortened URL
+    return __shortened_url
 
 
 def create_short_url_from_long_url(long_url: str) -> str:
@@ -24,34 +56,22 @@ def create_short_url_from_long_url(long_url: str) -> str:
         str: shortened version of the provided long URL as string
     """
 
-    # find an existing record corresponding to the given long URL
-    __existing_record: UrlDatabaseRecord | None = find_record_by_long_url(long_url=long_url)
+    # check if the given long url is valid
+    # check if the same long url has already been shortened
 
-    # check if an existing record was not found
-    if __existing_record is None:
-        # get the environment variable value for the hash length
-        __hash_length: str = os.environ.get('HASH_LENGTH') or '20'
+    # get required length of the shortened url
+    __short_url_length: str = os.environ.get('SHORT_URL_STRING_LENGTH') or '7'
 
-        # generate shortened url from the provided long url
-        __short_url: str = generate_hashed_value_from_string(source=long_url[::-1],
-                                                        hash_length=int(__hash_length))
+    # generate shortened url for the given long url
+    __shortened_url: str = __generate_shortened_url(length=int(__short_url_length))
 
-        # store the shortened url to database
-        add_shortened_url_record(record_to_add=UrlDatabaseRecord(
-            short_url=__short_url,
-            long_url=long_url,
-            deleted=False,
-            created_on=get_current_time_stamp()))
+    # add generated shortened url data to the database
+    add_shortened_url_record(record_to_add=UrlData(
+        short_url=__shortened_url,
+        long_url=long_url,
+        created_on=get_current_time_stamp(),
+        last_used_on=get_current_time_stamp(),
+    ))
 
-        # return the generated shortened url
-        return __short_url
-
-    # check if the existing record has been deleted already
-    if __existing_record.deleted:
-        # update the existing record as not deleted on the database
-        update_record_deleted_status(
-            short_url=__existing_record.short_url,
-            deleted=False)
-
-    # return the existing shortened url
-    return __existing_record.short_url
+    # return generated shortened url
+    return __shortened_url

@@ -15,16 +15,20 @@ from app.models.api.response_model import ApplicationResponse
 from app.utilities.validation_utility import does_request_has_json_body
 
 
-def get_current_time_stamp() -> str:
+def get_current_time_stamp(output_format: str ='%Y/%m/%dT%H:%M:%S:%f') -> str:
     """
-    Retrieve the current timestamp in a formatted string.
+    Get the current timestamp in a specified format.
+
+    Args:
+        output_format (str, optional): The format string used to represent the timestamp.
+            Defaults to '%Y/%m/%dT%H:%M:%S:%f'.
 
     Returns:
-        str: The formatted current timestamp.
+        str: The current timestamp formatted according to the provided format string.
     """
 
     # return the formatted current datetime
-    return datetime.now().strftime(format='%Y/%m/%dT%H:%M:%S:%f')
+    return datetime.now().strftime(format=output_format)
 
 
 def build_response(response_data: object,

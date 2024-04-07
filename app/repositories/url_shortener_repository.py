@@ -6,68 +6,16 @@ related to url shortening functionality.
 """
 
 
-from typing import Any
-from sqlalchemy import Engine, Row, text
-from app.models.db.database_model import UrlDatabaseRecord
+from sqlalchemy import Engine, text
+from app.models.db.database_model import UrlData
 from app.utilities.common_utility import get_sql_query_from_file
 from app.utilities.database_utility import DatabaseUtility
-from app.constants.sql_query_file_path_constant import \
-    FIND_RECORD_BY_LONG_URL, INSERT_SHORT_URL, UPDATE_RECORD_DELETED_STATUS
+from app.constants.sql_query_file_path_constant import INSERT_SHORT_URL
 from app.exceptions.custom_application_exceptions import \
     DatabaseEngineNotInitializedException
 
 
-def find_record_by_long_url(long_url: str) -> UrlDatabaseRecord | None:
-    """
-    Find a database record corresponding to the given long URL value.
-
-    Parameters:
-        long_url (str): The long URL to be used for searching of the existing short URL.
-
-    Returns:
-        UrlDatabaseRecord: An instance of UrlDatabaseRecord, containing all required
-        data from the database record if found any, else None.
-
-    Raises:
-        DatabaseEngineNotInitializedException: If the database engine is not initialized.
-    """
-
-    # get instance of the database engine
-    __engine: Engine | None = DatabaseUtility.get_database_engine()
-
-    # check if an instance of engine was received
-    if __engine is not None:
-        # fetch sql query from file
-        __query_str: str = get_sql_query_from_file(
-                    file_path=FIND_RECORD_BY_LONG_URL)
-
-        # open context manager
-        with __engine.begin() as connection:
-            # execute sql query with corresponding parameters
-            __result: Row[Any] | None = connection.execute(
-                statement=text(text=__query_str),
-                parameters={'l_url': long_url}).first()
-
-            # check if a row is present in the result and contains the value for the
-            # corresponding attribute
-            if __result is not None:
-                # return the result
-                return UrlDatabaseRecord(
-                    short_url=__result.s_url,
-                    long_url=__result.l_url,
-                    deleted=__result.deleted == 1,
-                    created_on=__result.created_at
-                )
-
-            # else return None as result if no row was present or the result does not
-            # contain the required attribute
-            return None
-    # else raise corresponding exception
-    else:
-        raise DatabaseEngineNotInitializedException()
-
-
-def add_shortened_url_record(record_to_add: UrlDatabaseRecord) -> None:
+def add_shortened_url_record(record_to_add: UrlData) -> None:
     """
     Add a new record into the database to store the generated shortened URL value
 
@@ -95,45 +43,11 @@ def add_shortened_url_record(record_to_add: UrlDatabaseRecord) -> None:
             # execute sql query with corresponding parameters
             connection.execute(
                 statement=text(text=__query_str),
-                parameters={'s_url': record_to_add.short_url,
-                            'l_url': record_to_add.long_url,
-                            'deleted': 1 if record_to_add.deleted else 0,
-                            'created_at': record_to_add.created_on}
-                )
-    # else raise corresponding exception
-    else:
-        raise DatabaseEngineNotInitializedException()
-
-
-def update_record_deleted_status(short_url: str, deleted: bool) -> None:
-    """
-    Update the 'deleted' status of an existing URL record in the database
-
-    Parameters:
-        short_url (str): short URL value to find the existing URL record
-        deleted (bool): updated value of the 'deleted' status
-
-    Returns:
-        None
-    """
-
-    # get instance of the database engine
-    __engine: Engine | None = DatabaseUtility.get_database_engine()
-
-    # check if an instance of engine was received
-    if __engine is not None:
-        # fetch sql query from file
-        __query_str: str = get_sql_query_from_file(file_path=UPDATE_RECORD_DELETED_STATUS)
-
-        # open context manager
-        with __engine.begin() as connection:
-            # execute sql query with corresponding parameters
-            connection.execute(
-                statement=text(text=__query_str),
-                parameters={
-                    'deleted': 1 if deleted else 0,
-                    's_url': short_url
-                    }
+                parameters={'short_url_value': record_to_add.short_url,
+                            'long_url_value': record_to_add.long_url,
+                            'created_at': record_to_add.created_on,
+                            'last_used_on': record_to_add.last_used_on
+                            }
                 )
     # else raise corresponding exception
     else:
