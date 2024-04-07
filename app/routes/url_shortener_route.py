@@ -12,6 +12,7 @@ from app.services.url_shortener_service import create_short_url_from_long_url
 from app.utilities.common_utility import build_response, get_json_request_body
 from app.exceptions.custom_application_exceptions import \
     DatabaseEngineNotInitializedException, QueryFileNotFoundException
+from app.utilities.validation_utility import is_valid_url
 
 # create blueprint
 url_shortener_blueprint: Blueprint = Blueprint(name='url_shortener',
@@ -44,6 +45,12 @@ def generate_shortened_url() -> Response:
     if __long_url is None:
         # send corresponding error response
         return build_response(response_data='REQUIRED LONG URL WAS NOT FOUND IN THE REQUEST BODY',
+                              response_status_code=400)
+
+    # check if the received data is not a valid url
+    if not is_valid_url(input_url=__long_url):
+        # send corresponding error response
+        return build_response(response_data=f'INVALID URL: {__long_url}',
                               response_status_code=400)
 
     try:

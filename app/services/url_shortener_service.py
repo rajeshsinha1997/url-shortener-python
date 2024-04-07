@@ -56,7 +56,6 @@ def create_short_url_from_long_url(long_url: str) -> str:
         str: shortened version of the provided long URL as string
     """
 
-    # check if the given long url is valid
     # check if the same long url has already been shortened
 
     # get required length of the shortened url
