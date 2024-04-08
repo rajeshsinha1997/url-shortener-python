@@ -7,6 +7,7 @@ This module provides a utility class for managing database connections and opera
 
 import os
 from abc import ABC
+from loguru import logger
 from sqlalchemy import Engine, create_engine
 
 from app.exceptions.custom_application_exceptions import ApplicationInitializationException
@@ -38,18 +39,24 @@ class DatabaseUtility(ABC):
         """
 
         # check if the engine is not yer initialized
+        logger.info('checking if the database engine has been initialized')
         if cls.__engine is None:
             # get database url from environment variable
+            logger.debug('retrieving database URL from environment')
             __database_url: str | None = os.environ.get('DATABASE_URL')
 
             # check if a value of database url was not found in the environment variables
             if __database_url is None:
+                logger.error('no database URL found in environment')
+
                 # raise corresponding exception
                 raise ApplicationInitializationException(
                     exception_message=f'INVALID DATABASE URL: {__database_url}')
 
             # create database engine
+            logger.debug('initializing the database engine')
             cls.__engine = create_engine(url=__database_url, echo=True)
+        logger.info('the database engine has been initialized')
 
     @classmethod
     def get_database_engine(cls) -> Engine | None:
@@ -64,4 +71,5 @@ class DatabaseUtility(ABC):
         """
 
         # return instance of the database engine
+        logger.info('returning the database engine')
         return cls.__engine

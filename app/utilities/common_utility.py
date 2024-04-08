@@ -10,6 +10,7 @@ import json
 import os
 
 from flask import Request, Response
+from loguru import logger
 from app.exceptions.custom_application_exceptions import QueryFileNotFoundException
 from app.models.api.response_model import ApplicationResponse
 from app.utilities.validation_utility import does_request_has_json_body
@@ -28,6 +29,7 @@ def get_current_time_stamp(output_format: str ='%Y/%m/%dT%H:%M:%S:%f') -> str:
     """
 
     # return the formatted current datetime
+    logger.info(f'returning the current timestamp in format - ${output_format}')
     return datetime.now().strftime(format=output_format)
 
 
@@ -45,16 +47,20 @@ def build_response(response_data: object,
     """
 
     # build application response
+    logger.debug(f'building response object with response data - {response_data}')
     __application_response = ApplicationResponse(
                         current_timestamp=get_current_time_stamp(),
                         response_data=response_data)
 
     # create json representation of the application response
+    logger.debug(f'converting the response object to a JSON object - {__application_response}')
     __json_response: str = json.dumps(obj=__application_response,
                                     default=lambda obj: obj.to_json(),
                                     indent=4)
 
     # return response object with response data
+    logger.info(f'returning response with response status code - {response_status_code}, '
+                f'response data - {__json_response}')
     return Response(content_type='application/json',
                     status=response_status_code,
                     response=__json_response)
@@ -73,18 +79,25 @@ def get_json_request_body(request: Request) -> dict[str, str] | None:
     """
 
     # check if flask HTTP request contains a valid json request body
+    logger.info('verify if the request contains a JSON request body')
     if does_request_has_json_body(request=request):
         # get json request body from flask HTTP request object
+        logger.debug('retrieve JSON body from the request')
         __json_request_body: dict[str, str] | None = request.get_json(silent=True)
 
         # check if a valid json request body was parsed and contains at least a single entry
+        logger.debug('verify if the JSON request body contains at least one record')
         if __json_request_body is not None and len(__json_request_body.keys()) > 0:
             # return parsed json request body
+            logger.info('return the JSON request body')
             return __json_request_body
+
         # else return None as result
+        logger.info('JSON request body doesn\'t contain any record, returning None')
         return None
 
     # else return None as fallback result
+    logger.info('request doesn\'t contain any JSON body, returning None')
     return None
 
 
@@ -107,15 +120,19 @@ def generate_hash_from_string(input_string: str, algorithm: str='sha256') -> str
 
     try:
         # initialize the hash object using the specified algorithm
+        logger.info(f'trying to create hash object with algorithm - {algorithm}')
         __hash_object = new(name=algorithm)
     except ValueError:
         # initialize the hash object using the default algorithm
+        logger.info('trying to create hash object with algorithm - sha256')
         __hash_object = new(name='sha256')
 
     # update the hash object with the input string
+    logger.info('encoding the given string into the hash object created')
     __hash_object.update(input_string.encode())
 
     # generate and return hash in hexadecimal format
+    logger.info('returning hash value as string in hexadecimal format')
     return __hash_object.hexdigest()
 
 
@@ -134,12 +151,16 @@ def get_sql_query_from_file(file_path: str) -> str:
     """
 
     # check if the provided file path exists
+    logger.info(f'checking if the given path to the sql file exists - {file_path}')
     if os.path.exists(path=file_path):
         # open file present at the provided path in reading mode
+        logger.debug('opening the sql file in reading mode')
         with open(file=file_path, mode='r', encoding='UTF-8') as query:
             # return the contents of the file into a variable
+            logger.info('returning the retrieved query from the file')
             return query.read()
     # else throw corresponding error
     else:
+        logger.error('given sql file path is invalid')
         raise QueryFileNotFoundException(
             exception_message=f'INVALID SQL QUERY FILE PATH: {file_path}')

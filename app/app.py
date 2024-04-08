@@ -6,6 +6,7 @@ retrieving, and deleting a Flask application instance for the URL shortener serv
 """
 
 from flask import Flask
+from loguru import logger
 
 from app.routes.url_shortener_route import url_shortener_blueprint
 from app.routes.service_health_route import service_health_blueprint
@@ -33,13 +34,17 @@ class UrlShortenerApplication:
         """
 
         # check if the application has not been created already
+        logger.info('checking if the url-shortener application has been initialized')
         if cls.__application is None:
             # create flask application
+            logger.debug('initializing the url-shortener application')
             cls.__application = Flask(import_name=__name__)
 
             # register blueprints
+            logger.debug('registering blueprints to the url-shortener application')
             cls.__application.register_blueprint(blueprint=service_health_blueprint)
             cls.__application.register_blueprint(blueprint=url_shortener_blueprint)
+        logger.info('the url-shortener application has been initialized')
 
     @classmethod
     def get_application(cls) -> Flask | None:
@@ -54,4 +59,5 @@ class UrlShortenerApplication:
         """
 
         # return the application
+        logger.info('returning the url-shortener application')
         return cls.__application
