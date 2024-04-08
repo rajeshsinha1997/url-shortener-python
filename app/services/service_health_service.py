@@ -5,6 +5,7 @@ This module is responsible for processing the business logics and building the s
 responses for the URL shortener application and the connected external services.
 """
 
+import os
 from sqlalchemy.exc import OperationalError
 from app.constants.application_constant import \
     APPLICATION_NAME, APPLICATION_STATUS_DOWN, APPLICATION_STATUS_UP
@@ -74,7 +75,7 @@ def build_service_health_response() -> ServiceHealthResponse:
         params={
             'current_timestamp': get_current_time_stamp(),
             'application_name': APPLICATION_NAME,
-            'application_version': '0.0.1',
+            'application_version': os.environ.get('APPLICATION_VERSION') or 'N.A.',
             'application_status': APPLICATION_STATUS_UP
         })
 
