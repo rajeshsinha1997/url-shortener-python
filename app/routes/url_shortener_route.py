@@ -7,6 +7,7 @@ such as shortening a long url, retrieving the original long url from the shorten
 
 
 from flask import Blueprint, Response, request
+from sqlalchemy.exc import DBAPIError
 
 from app.services.url_shortener_service import create_short_url_from_long_url
 from app.utilities.common_utility import build_response, get_json_request_body
@@ -57,7 +58,7 @@ def generate_shortened_url() -> Response:
         # call service function to get the shortened URL and build the response
         return build_response(response_data=create_short_url_from_long_url(long_url=__long_url),
                               response_status_code=201)
-    except (QueryFileNotFoundException, DatabaseEngineNotInitializedException):
+    except (QueryFileNotFoundException, DatabaseEngineNotInitializedException, DBAPIError):
         # return corresponding error response
         return build_response(response_data='SOME INTERNAL ERROR OCCURRED',
                               response_status_code=500)
