@@ -6,6 +6,7 @@ URL shortener application.
 """
 
 from flask import Blueprint, Response
+from loguru import logger
 
 from app.services.service_health_service import build_service_health_response
 from app.utilities.common_utility import build_response
@@ -26,6 +27,7 @@ def get_service_health() -> Response:
     """
 
     # return service health response
+    logger.info('building service health response')
     return build_response(
         response_data=build_service_health_response(),
         response_status_code=200)
