@@ -29,7 +29,7 @@ def get_current_time_stamp(output_format: str ='%Y/%m/%dT%H:%M:%S:%f') -> str:
     """
 
     # return the formatted current datetime
-    logger.info(f'returning the current timestamp in format - ${output_format}')
+    logger.debug(f'returning the current timestamp in format - ${output_format}')
     return datetime.now().strftime(format=output_format)
 
 
@@ -46,14 +46,14 @@ def build_response(response_data: object,
         Response: The Flask response object.
     """
 
-    # build application response
+    # build application response object
     logger.debug(f'building response object with response data - {response_data}')
     __application_response = ApplicationResponse(
                         current_timestamp=get_current_time_stamp(),
                         response_data=response_data)
 
-    # create json representation of the application response
-    logger.debug(f'converting the response object to a JSON object - {__application_response}')
+    # create json representation of the application response object
+    logger.debug(f'creating a JSON representation of the response - {__application_response}')
     __json_response: str = json.dumps(obj=__application_response,
                                     default=lambda obj: obj.to_json(),
                                     indent=4)
@@ -79,25 +79,25 @@ def get_json_request_body(request: Request) -> dict[str, str] | None:
     """
 
     # check if flask HTTP request contains a valid json request body
-    logger.info('verify if the request contains a JSON request body')
+    logger.debug('verifying if the request contains a JSON request body')
     if does_request_has_json_body(request=request):
         # get json request body from flask HTTP request object
-        logger.debug('retrieve JSON body from the request')
+        logger.debug('retrieving JSON body from the request')
         __json_request_body: dict[str, str] | None = request.get_json(silent=True)
 
         # check if a valid json request body was parsed and contains at least a single entry
-        logger.debug('verify if the JSON request body contains at least one record')
+        logger.debug('verifying if the JSON request body contains at least one record')
         if __json_request_body is not None and len(__json_request_body.keys()) > 0:
             # return parsed json request body
-            logger.info('return the JSON request body')
+            logger.debug('returning the JSON request body')
             return __json_request_body
 
         # else return None as result
-        logger.info('JSON request body doesn\'t contain any record, returning None')
+        logger.warning('JSON request body doesn\'t contain any record')
         return None
 
     # else return None as fallback result
-    logger.info('request doesn\'t contain any JSON body, returning None')
+    logger.warning('request doesn\'t contain any JSON body')
     return None
 
 

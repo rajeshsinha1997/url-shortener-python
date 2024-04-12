@@ -22,7 +22,7 @@ logger.info(f'current environment - {__environment}')
 # check if the current environment is not 'production'
 if __environment != 'production':
     # load dotenv file
-    logger.info('loading environment variables from dotenv file')
+    logger.info('loading the environment variables from dotenv file')
     load_dotenv()
 
 
@@ -32,10 +32,10 @@ DatabaseUtility.initialize_database()
 
 
 # create flask application
-logger.info('creating url-shortener application')
+logger.info('creating the url-shortener application')
 UrlShortenerApplication.create_application()
 
 
 # call method to get application
-logger.info('retrieving url-shortener application instance')
+logger.info('retrieving the url-shortener application instance')
 app: Flask | None = UrlShortenerApplication.get_application()

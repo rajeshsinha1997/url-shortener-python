@@ -38,24 +38,28 @@ class DatabaseUtility(ABC):
             None
         """
 
-        # check if the engine is not yer initialized
+        # check if the database engine is not yet initialized
         logger.info('checking if the database engine has been initialized')
         if cls.__engine is None:
-            # get database url from environment variable
-            logger.debug('retrieving database URL from environment')
+            # retrieve the database url from the environment
+            logger.debug('retrieving database URL from the environment')
             __database_url: str | None = os.environ.get('DATABASE_URL')
 
-            # check if a value of database url was not found in the environment variables
+            # check if a value of database url was not found in the environment
             if __database_url is None:
-                logger.error('no database URL found in environment')
+                logger.error('no database URL found in the environment')
 
                 # raise corresponding exception
                 raise ApplicationInitializationException(
-                    exception_message=f'INVALID DATABASE URL: {__database_url}')
+                    exception_message='NO DATABASE URL FOUND IN THE ENVIRONMENT')
+
+            # retrieve 'echo' flag value from the environment
+            logger.debug('retrieving \'echo\' flag value from the environment')
+            __echo: str = os.environ.get('DATABASE_ECHO') or 'False'
 
             # create database engine
-            logger.debug('initializing the database engine')
-            cls.__engine = create_engine(url=__database_url, echo=True)
+            logger.info(f'initializing the database engine with echo - {__echo}')
+            cls.__engine = create_engine(url=__database_url, echo=__echo)
         logger.info('the database engine has been initialized')
 
     @classmethod
@@ -71,5 +75,5 @@ class DatabaseUtility(ABC):
         """
 
         # return instance of the database engine
-        logger.info('returning the database engine')
+        logger.debug('returning the database engine')
         return cls.__engine

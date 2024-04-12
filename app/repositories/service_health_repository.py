@@ -25,13 +25,13 @@ def get_database_info() -> str | None:
     """
 
     # get instance of the database engine
-    logger.debug('retrieving database engine instance')
+    logger.info('retrieving database engine instance')
     __engine: Engine | None = DatabaseUtility.get_database_engine()
 
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        logger.debug(f'retrieving sql query from file path - {GET_DATABASE_INFORMATION}')
+        logger.info(f'retrieving sql query from file path - {GET_DATABASE_INFORMATION}')
         __query_str: str = get_sql_query_from_file(
                     file_path=GET_DATABASE_INFORMATION)
 

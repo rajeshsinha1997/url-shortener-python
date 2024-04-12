@@ -5,7 +5,7 @@ This module defines a Flask Blueprint for handling health check endpoints of the
 URL shortener application.
 """
 
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
 from loguru import logger
 
 from app.services.service_health_service import build_service_health_response
@@ -25,6 +25,9 @@ def get_service_health() -> Response:
     Returns:
         Response: HTTP response containing the service health data.
     """
+
+    # log request
+    logger.info(f'received {request.method} request to {request.url}')
 
     # return service health response
     logger.info('building service health response')

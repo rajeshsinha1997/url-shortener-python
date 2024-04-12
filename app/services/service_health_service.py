@@ -27,10 +27,10 @@ def __get_database_service_health() -> ServiceHealthResponse:
             a default application name and version will be returned.
     """
 
-    logger.info('generating service health data for database')
+    logger.info('generating service health data for the database service')
 
-    # create database service health data object
-    __connected_database_health: ServiceHealthResponse = ServiceHealthResponse(
+    # create service health data object for the database service
+    __database_health: ServiceHealthResponse = ServiceHealthResponse(
         params={
             'current_timestamp': get_current_time_stamp(),
             'application_name': 'DATABASE',
@@ -46,19 +46,19 @@ def __get_database_service_health() -> ServiceHealthResponse:
 
         # check if database information was found
         if __database_info is not None:
-            logger.debug('retrieved database information successfully')
-
             # split the database information by spaces
             __database_information_list: list[str] = __database_info.split()
 
             # update the database name in the service health data object
-            __connected_database_health.application_name = __database_information_list[0]
+            __database_health.application_name = __database_information_list[0]
 
             # update the database version in the service health data object
-            __connected_database_health.application_version = __database_information_list[1]
+            __database_health.application_version = __database_information_list[1]
 
             # update connected database running status
-            __connected_database_health.application_status = APPLICATION_STATUS_UP
+            __database_health.application_status = APPLICATION_STATUS_UP
+
+            logger.info(f'generated service health data for the database - {__database_health}')
         else:
             # log warning message
             logger.warning('no database information was found')
@@ -67,8 +67,7 @@ def __get_database_service_health() -> ServiceHealthResponse:
         logger.error(f'unable to retrieve database information - {e}')
 
     # return database health
-    logger.info(f'generated service health data for database - {__connected_database_health}')
-    return __connected_database_health
+    return __database_health
 
 
 def build_service_health_response() -> ServiceHealthResponse:
@@ -91,12 +90,13 @@ def build_service_health_response() -> ServiceHealthResponse:
             'application_status': APPLICATION_STATUS_UP
         })
 
-    logger.debug('adding service health data for connected services')
+    logger.info('adding service health data for the connected services')
 
-    # add service-health data of connected database services
+    # add service-health data for the database service
     __service_health_response.connected_services_health.append(
         __get_database_service_health()
     )
+    logger.debug('added service-health data for the database service')
 
     # return service-health response
     logger.info(f'generated service health data - {__service_health_response}')
