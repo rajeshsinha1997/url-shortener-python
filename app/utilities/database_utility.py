@@ -59,7 +59,7 @@ class DatabaseUtility(ABC):
 
             # create database engine
             logger.info(f'initializing the database engine with echo - {__echo}')
-            cls.__engine = create_engine(url=__database_url, echo=__echo)
+            cls.__engine = create_engine(url=__database_url, echo=bool(__echo))
         logger.info('the database engine has been initialized')
 
     @classmethod
@@ -75,5 +75,4 @@ class DatabaseUtility(ABC):
         """
 
         # return instance of the database engine
-        logger.debug('returning the database engine')
         return cls.__engine

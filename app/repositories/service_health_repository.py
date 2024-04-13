@@ -25,28 +25,28 @@ def get_database_info() -> str | None:
     """
 
     # get instance of the database engine
-    logger.info('retrieving database engine instance')
+    logger.debug('retrieving instance of the database engine')
     __engine: Engine | None = DatabaseUtility.get_database_engine()
 
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        logger.info(f'retrieving sql query from file path - {GET_DATABASE_INFORMATION}')
+        logger.debug(f'retrieving the sql query from file path - {GET_DATABASE_INFORMATION}')
         __query_str: str = get_sql_query_from_file(
                     file_path=GET_DATABASE_INFORMATION)
 
         # open context manager
-        logger.debug('trying to connect to the database')
+        logger.debug('connecting to the database')
         with __engine.connect() as connection:
             # execute sql query with corresponding parameters
-            logger.debug('trying to execute retrieved sql query')
+            logger.debug('retrieving database information')
             __result: Row[Any] | None = connection.execute(
                 statement=text(text=__query_str)).first()
 
             # return database information if available, else return None
-            logger.info(f'retrieved database information successfully - {__result}')
+            logger.info(f'retrieved database information - {__result}')
             return __result[0] if __result is not None else None
     # else raise corresponding exception
     else:
-        logger.error('no database engine instance available')
+        logger.error('no instance of the database engine available')
         raise DatabaseEngineNotInitializedException()

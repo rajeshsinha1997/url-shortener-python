@@ -41,7 +41,7 @@ class UrlShortenerApplication:
             cls.__application = Flask(import_name=__name__)
 
             # register blueprints
-            logger.debug('registering blueprints to the url-shortener application')
+            logger.info('registering blueprints to the url-shortener application')
             cls.__application.register_blueprint(blueprint=service_health_blueprint)
             cls.__application.register_blueprint(blueprint=url_shortener_blueprint)
         logger.info('the url-shortener application has been initialized')
@@ -59,5 +59,4 @@ class UrlShortenerApplication:
         """
 
         # return the application
-        logger.info('returning the url-shortener application')
         return cls.__application
