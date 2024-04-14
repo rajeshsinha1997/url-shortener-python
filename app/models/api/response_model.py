@@ -38,7 +38,7 @@ class ApplicationResponse:
         """
 
         return (
-            f'Response Timestamp: {self.response_timestamp}'
+            f'Response Timestamp: {self.response_timestamp}, '
             f'Response Data: {self.response_data}'
         )
 
@@ -95,10 +95,11 @@ class ServiceHealthResponse:
         """
 
         return (
-            f'Health Check Timestamp: {self.health_check_timestamp}\n'
-            f'Application Name: {self.application_name}\n'
-            f'Application Version: {self.application_version}\n'
-            f'Application Status: {self.application_status}\n'
+            f'Health Check Timestamp: {self.health_check_timestamp}, '
+            f'Application Name: {self.application_name}, '
+            f'Application Version: {self.application_version}, '
+            f'Application Status: {self.application_status}, '
+            f'Connected Services: {self.connected_services_health}'
         )
 
     def to_json(self) -> dict[str, object]:

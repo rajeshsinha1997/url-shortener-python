@@ -45,10 +45,10 @@ class UrlData:
         """
 
         return (
-            f'Short URL: {self.short_url}'
-            f'Long URL: {self.long_url}'
-            f'Long URL Hash: {self.long_url_hash}'
-            f'Created On: {self.created_on}'
+            f'Short URL: {self.short_url}, '
+            f'Long URL: {self.long_url}, '
+            f'Long URL Hash: {self.long_url_hash}, '
+            f'Created On: {self.created_on}, '
             f'Last Used On: {self.last_used_on}'
         )
 
