@@ -86,7 +86,7 @@ class ServiceHealthResponse:
         self.application_status: str = params['application_status']
         self.connected_services_health: list['ServiceHealthResponse'] = []
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         """
         Return a string representation of the object.
 

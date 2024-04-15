@@ -149,7 +149,7 @@ def get_sql_query_from_file(file_path: str) -> str:
     """
 
     # check if the provided file path exists
-    logger.info(f'checking if the given path to the sql file exists - {file_path}')
+    logger.debug(f'checking if the given path to the sql file exists - {file_path}')
     if os.path.exists(path=file_path):
         # open file present at the provided path in reading mode
         logger.debug(f'opening the sql file at the given path in reading mode - {file_path}')

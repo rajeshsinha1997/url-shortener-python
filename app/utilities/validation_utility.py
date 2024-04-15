@@ -8,6 +8,21 @@ validation result if required.
 from urllib.parse import ParseResult, urlparse
 from loguru import logger
 
+from app.constants.application_constant import ALLOWED_LOG_LEVELS
+
+
+def is_valid_log_level(log_level: str | None) -> bool:
+    """
+    Checks if a given log level value is valid.
+
+    Parameters:
+    - log_level (str | None): value of the log level to be validated.
+
+    Returns:
+    - bool: True if the log level is valid, False otherwise.
+    """
+    return log_level is not None and log_level in ALLOWED_LOG_LEVELS
+
 
 def is_valid_url(input_url: str) -> bool:
     """

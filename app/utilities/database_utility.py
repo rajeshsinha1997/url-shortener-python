@@ -10,6 +10,7 @@ from abc import ABC
 from loguru import logger
 from sqlalchemy import Engine, create_engine
 
+from app.constants.application_constant import ALLOWED_ECHO_VALUES
 from app.exceptions.custom_application_exceptions import ApplicationInitializationException
 
 
@@ -53,13 +54,18 @@ class DatabaseUtility(ABC):
                 raise ApplicationInitializationException(
                     exception_message='NO DATABASE URL FOUND IN THE ENVIRONMENT')
 
+            # create database engine
+            logger.info('initializing the database engine')
+            cls.__engine = create_engine(url=__database_url)
+
             # retrieve 'echo' flag value from the environment
             logger.debug('retrieving \'echo\' flag value from the environment')
             __echo: str = os.environ.get('DATABASE_ECHO') or 'False'
 
-            # create database engine
-            logger.info(f'initializing the database engine with echo - {__echo}')
-            cls.__engine = create_engine(url=__database_url, echo=bool(__echo))
+            # set echo attribute value for the database engine
+            cls.__engine.echo = __echo == 'True' if __echo in ALLOWED_ECHO_VALUES else False
+            logger.info('echo attribute value of the database engine has been updated to'
+                        f' - {cls.__engine.echo}')
         logger.info('the database engine has been initialized')
 
     @classmethod
