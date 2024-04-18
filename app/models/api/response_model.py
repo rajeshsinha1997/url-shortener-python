@@ -55,7 +55,7 @@ class ApplicationResponse:
         return {
             'response-timestamp': self.response_timestamp,
             'response-data': self.response_data
-            }
+        }
 
 
 class ServiceHealthResponse:

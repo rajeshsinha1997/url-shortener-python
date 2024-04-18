@@ -69,26 +69,29 @@ def create_short_url_from_long_url(long_url: str) -> str:
         algorithm=os.environ.get('LONG_URL_HASH_ALGORITHM') or 'md5')
 
     # find an existing short url for the given long url
-    logger.info(f'checking if the long URL has been shortened before - {long_url}')
+    logger.info(
+        f'checking if the long URL has been shortened before - {long_url}')
     __existing_short_url: str | None = find_short_url_value_by_long_url_hash(
         long_url_hash=__long_url_hash
-        )
+    )
 
     # check if any existing short url was found
     if __existing_short_url is not None:
         # return the existing short url
-        logger.info(f'short URL \'{__existing_short_url}\' '+
+        logger.info(f'short URL \'{__existing_short_url}\' ' +
                     f'already exists for the long URL - {long_url}')
         return __existing_short_url
 
     # get required length of the shortened url
     __short_url_length: str | None = os.environ.get('SHORT_URL_STRING_LENGTH')
-    logger.debug('retrieved value of the short URL string length '+
+    logger.debug('retrieved value of the short URL string length ' +
                  f'from the environment - {__short_url_length}')
 
     # generate shortened url for the given long url
-    __shortened_url: str = __generate_shortened_url(length=int(__short_url_length or '7'))
-    logger.info(f'short URL \'{__shortened_url}\' generated for the long URL - {long_url}')
+    __shortened_url: str = __generate_shortened_url(
+        length=int(__short_url_length or '7'))
+    logger.info(f'short URL \'{
+                __shortened_url}\' generated for the long URL - {long_url}')
 
     # add generated shortened url data to the database
     add_shortened_url_record(record_to_add=UrlData(
@@ -99,7 +102,8 @@ def create_short_url_from_long_url(long_url: str) -> str:
             'created_on': get_current_time_stamp(),
             'last_used_on': get_current_time_stamp(),
         }))
-    logger.info(f'saved new short URL \'{__shortened_url}\' for the long URL - {long_url}')
+    logger.info(f'saved new short URL \'{
+                __shortened_url}\' for the long URL - {long_url}')
 
     # return generated shortened url
     return __shortened_url

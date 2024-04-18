@@ -34,16 +34,20 @@ class UrlShortenerApplication:
         """
 
         # check if the application has not been created already
-        logger.info('checking if the url-shortener application has been initialized')
+        logger.info(
+            'checking if the url-shortener application has been initialized')
         if cls.__application is None:
             # create flask application
             logger.debug('initializing the url-shortener application')
             cls.__application = Flask(import_name=__name__)
 
             # register blueprints
-            logger.info('registering blueprints to the url-shortener application')
-            cls.__application.register_blueprint(blueprint=service_health_blueprint)
-            cls.__application.register_blueprint(blueprint=url_shortener_blueprint)
+            logger.info(
+                'registering blueprints to the url-shortener application')
+            cls.__application.register_blueprint(
+                blueprint=service_health_blueprint)
+            cls.__application.register_blueprint(
+                blueprint=url_shortener_blueprint)
         logger.info('the url-shortener application has been initialized')
 
     @classmethod

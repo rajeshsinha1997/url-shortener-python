@@ -45,7 +45,6 @@ class DatabaseEngineNotInitializedException(Exception):
         super().__init__(*args)
 
 
-
 class QueryFileNotFoundException(Exception):
     """
     Exception raised when a SQL query file is not found.

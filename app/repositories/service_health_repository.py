@@ -31,9 +31,10 @@ def get_database_info() -> str | None:
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        logger.debug(f'retrieving the sql query from file path - {GET_DATABASE_INFORMATION}')
+        logger.debug(
+            f'retrieving the sql query from file path - {GET_DATABASE_INFORMATION}')
         __query_str: str = get_sql_query_from_file(
-                    file_path=GET_DATABASE_INFORMATION)
+            file_path=GET_DATABASE_INFORMATION)
 
         # open context manager
         logger.debug('connecting to the database')

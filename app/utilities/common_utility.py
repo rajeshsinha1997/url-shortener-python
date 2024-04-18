@@ -15,7 +15,7 @@ from app.exceptions.custom_application_exceptions import QueryFileNotFoundExcept
 from app.models.api.response_model import ApplicationResponse
 
 
-def get_current_time_stamp(output_format: str ='%Y/%m/%dT%H:%M:%S:%f') -> str:
+def get_current_time_stamp(output_format: str = '%Y/%m/%dT%H:%M:%S:%f') -> str:
     """
     Get the current timestamp in a specified format.
 
@@ -28,7 +28,8 @@ def get_current_time_stamp(output_format: str ='%Y/%m/%dT%H:%M:%S:%f') -> str:
     """
 
     # return the formatted current datetime
-    logger.debug(f'returning the current timestamp in format - ${output_format}')
+    logger.debug(
+        f'returning the current timestamp in format - ${output_format}')
     return datetime.now().strftime(format=output_format)
 
 
@@ -46,19 +47,21 @@ def build_response(response_data: object,
     """
 
     # build application response object
-    logger.debug(f'building response object with response data - {response_data}')
+    logger.debug(
+        f'building response object with response data - {response_data}')
     __application_response = ApplicationResponse(
-                        current_timestamp=get_current_time_stamp(),
-                        response_data=response_data)
+        current_timestamp=get_current_time_stamp(),
+        response_data=response_data)
 
     # create json representation of the application response object
-    logger.debug(f'creating a JSON representation of the response - {__application_response}')
+    logger.debug(
+        f'creating a JSON representation of the response - {__application_response}')
     __json_response: str = json.dumps(obj=__application_response,
-                                    default=lambda obj: obj.to_json(),
-                                    indent=4)
+                                      default=lambda obj: obj.to_json(),
+                                      indent=4)
 
     # return response object with response data
-    logger.info(f'returning response with response status code - {response_status_code}, '+
+    logger.info(f'returning response with response status code - {response_status_code}, ' +
                 f'response data - {__json_response}')
     return Response(content_type='application/json',
                     status=response_status_code,
@@ -82,10 +85,12 @@ def get_json_request_body(request: Request) -> dict[str, object] | None:
     if request.is_json:
         # get json request body from flask HTTP request object
         logger.debug('retrieving the JSON body from the request')
-        __json_request_body: dict[str, object] | None = request.get_json(silent=True)
+        __json_request_body: dict[str,
+                                  object] | None = request.get_json(silent=True)
 
         # check if a valid json request body was parsed and contains at least a single entry
-        logger.debug('verifying if the JSON request body contains at least one record')
+        logger.debug(
+            'verifying if the JSON request body contains at least one record')
         if __json_request_body is not None and len(__json_request_body.keys()) > 0:
             # return parsed json request body
             return __json_request_body
@@ -99,7 +104,7 @@ def get_json_request_body(request: Request) -> dict[str, object] | None:
     return None
 
 
-def generate_hash_from_string(input_string: str, algorithm: str='sha256') -> str:
+def generate_hash_from_string(input_string: str, algorithm: str = 'sha256') -> str:
     """
     Generate the hash of a given string using the specified algorithm.
 
@@ -118,7 +123,8 @@ def generate_hash_from_string(input_string: str, algorithm: str='sha256') -> str
 
     try:
         # initialize the hash object using the specified algorithm
-        logger.debug(f'trying to create hash object with algorithm - {algorithm}')
+        logger.debug(
+            f'trying to create hash object with algorithm - {algorithm}')
         __hash_object = new(name=algorithm)
     except ValueError:
         # initialize the hash object using the default algorithm
@@ -149,13 +155,16 @@ def get_sql_query_from_file(file_path: str) -> str:
     """
 
     # check if the provided file path exists
-    logger.debug(f'checking if the given path to the sql file exists - {file_path}')
+    logger.debug(
+        f'checking if the given path to the sql file exists - {file_path}')
     if os.path.exists(path=file_path):
         # open file present at the provided path in reading mode
-        logger.debug(f'opening the sql file at the given path in reading mode - {file_path}')
+        logger.debug(
+            f'opening the sql file at the given path in reading mode - {file_path}')
         with open(file=file_path, mode='r', encoding='UTF-8') as query:
             # return the contents of the file into a variable
-            logger.debug(f'reading the contents of the sql file at the given path - {file_path}')
+            logger.debug(
+                f'reading the contents of the sql file at the given path - {file_path}')
             return query.read()
     # else throw corresponding error
     else:

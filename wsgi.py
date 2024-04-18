@@ -40,16 +40,16 @@ __log_level: str | None = os.environ.get('LOG_LEVEL')
 
 # add new console log handler
 logger.add(sink=sys.stdout,
-            colorize=True,
-            level= str(object=__log_level) if is_valid_log_level(
-                log_level=__log_level) else DEFAULT_LOG_LEVEL)
+           colorize=True,
+           level=str(object=__log_level) if is_valid_log_level(
+               log_level=__log_level) else DEFAULT_LOG_LEVEL)
 
 
 # add new file log handler
 logger.add(sink=LOG_OUTPUT_FILE_PATH,
-            rotation=LOG_OUTPUT_FILE_ROTATION_SIZE,
-            level=str(object=__log_level) if is_valid_log_level(
-                log_level=__log_level) else DEFAULT_LOG_LEVEL)
+           rotation=LOG_OUTPUT_FILE_ROTATION_SIZE,
+           level=str(object=__log_level) if is_valid_log_level(
+               log_level=__log_level) else DEFAULT_LOG_LEVEL)
 
 
 # initialize database

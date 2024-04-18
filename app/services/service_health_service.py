@@ -58,7 +58,8 @@ def __get_database_service_health() -> ServiceHealthResponse:
             # update connected database running status
             __database_health.application_status = APPLICATION_STATUS_UP
 
-            logger.info(f'generated service health data for the database - {__database_health}')
+            logger.info(
+                f'generated service health data for the database - {__database_health}')
         else:
             # log warning message
             logger.warning('no database information was found')

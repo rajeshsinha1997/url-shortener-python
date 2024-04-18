@@ -40,7 +40,8 @@ def find_short_url_value_by_long_url_hash(long_url_hash: str) -> str | None:
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        logger.debug(f'retrieving the sql query from file path - {GET_SHORT_URL_BY_LONG_URL_HASH}')
+        logger.debug(
+            f'retrieving the sql query from file path - {GET_SHORT_URL_BY_LONG_URL_HASH}')
         __query_str: str = get_sql_query_from_file(
             file_path=GET_SHORT_URL_BY_LONG_URL_HASH)
 
@@ -48,14 +49,15 @@ def find_short_url_value_by_long_url_hash(long_url_hash: str) -> str | None:
         logger.debug('connecting to the database')
         with __engine.begin() as connection:
             # execute sql query with corresponding parameters
-            logger.debug(f'retrieving existing short URL using the long URL hash - {long_url_hash}')
+            logger.debug(
+                f'retrieving existing short URL using the long URL hash - {long_url_hash}')
             __result: Row[Any] | None = connection.execute(
                 statement=text(text=__query_str),
                 parameters={'long_url_hash': long_url_hash}
-                ).first()
+            ).first()
 
             # return short url value if any row was found, else return None
-            logger.info(f'retrieved short URL \'{__result}\' using the long URL hash '+
+            logger.info(f'retrieved short URL \'{__result}\' using the long URL hash ' +
                         f'\'{long_url_hash}\'')
             return __result[0] if __result is not None else None
     # else raise corresponding exception
@@ -86,14 +88,16 @@ def add_shortened_url_record(record_to_add: UrlData) -> None:
     # check if an instance of engine was received
     if __engine is not None:
         # fetch sql query from file
-        logger.debug(f'retrieving the sql query from file path - {INSERT_SHORT_URL}')
+        logger.debug(
+            f'retrieving the sql query from file path - {INSERT_SHORT_URL}')
         __query_str: str = get_sql_query_from_file(file_path=INSERT_SHORT_URL)
 
         # open context manager
         logger.debug('connecting to the database')
         with __engine.begin() as connection:
             # execute sql query with corresponding parameters
-            logger.debug(f'adding a new short URL record to the database - {record_to_add}')
+            logger.debug(
+                f'adding a new short URL record to the database - {record_to_add}')
             connection.execute(
                 statement=text(text=__query_str),
                 parameters={'short_url_value': record_to_add.short_url,
@@ -102,8 +106,9 @@ def add_shortened_url_record(record_to_add: UrlData) -> None:
                             'created_at': record_to_add.created_on,
                             'last_used_on': record_to_add.last_used_on
                             }
-                )
-            logger.info(f'added new short URL record to the database - {record_to_add}')
+            )
+            logger.info(
+                f'added new short URL record to the database - {record_to_add}')
     # else raise corresponding exception
     else:
         logger.error('no instance of the database engine available')

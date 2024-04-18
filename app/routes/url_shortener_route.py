@@ -18,8 +18,8 @@ from app.utilities.validation_utility import is_valid_url
 
 # create blueprint
 url_shortener_blueprint: Blueprint = Blueprint(name='url_shortener',
-                                    import_name=__name__,
-                                    url_prefix='/api/')
+                                               import_name=__name__,
+                                               url_prefix='/api/')
 
 
 @url_shortener_blueprint.post(rule='/shorten/')
@@ -32,17 +32,19 @@ def generate_shortened_url() -> Response:
     """
 
     # log request
-    logger.info(f'received {request.method} request to {request.url}'+
+    logger.info(f'received {request.method} request to {request.url}' +
                 f'with payload - {request.data.decode()}')
 
     # validate and extract json request body from flask HTTP request
-    __request_body: dict[str, object] | None = get_json_request_body(request=request)
+    __request_body: dict[str, object] | None = get_json_request_body(
+        request=request)
     logger.debug(f'received JSON request body - {__request_body}')
 
     # check if request body is not a valid json request body
     if __request_body is None:
         # send corresponding error response
-        logger.error('a valid JSON request body was not found with the request')
+        logger.error(
+            'a valid JSON request body was not found with the request')
         return build_response(response_data='A VALID JSON REQUEST BODY WAS NOT FOUND',
                               response_status_code=400)
 
@@ -60,15 +62,18 @@ def generate_shortened_url() -> Response:
     # check if the received data is not a valid url
     if not is_valid_url(input_url=str(object=__long_url)):
         # send corresponding error response
-        logger.error(f'retrieved value of the long URL is not a valid URL - {__long_url}')
+        logger.error(
+            f'retrieved value of the long URL is not a valid URL - {__long_url}')
         return build_response(response_data=f'INVALID LONG URL: {__long_url}',
                               response_status_code=400)
 
     try:
         # call service function to get the shortened URL and build the response
-        logger.debug(f'creating short URL from the given long URL - {__long_url}')
+        logger.debug(
+            f'creating short URL from the given long URL - {__long_url}')
         return build_response(
-            response_data=create_short_url_from_long_url(long_url=str(object=__long_url)),
+            response_data=create_short_url_from_long_url(
+                long_url=str(object=__long_url)),
             response_status_code=201)
     except (QueryFileNotFoundException, DatabaseEngineNotInitializedException, DBAPIError) as __e:
         # return corresponding error response

@@ -5,6 +5,7 @@ This module defines the ApplicationInitializationException class, which is used 
 errors related to application initialization.
 """
 
+
 class ApplicationInitializationException(Exception):
     """
     Exception class for application initialization errors.
