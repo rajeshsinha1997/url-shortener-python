@@ -29,19 +29,6 @@ class ApplicationResponse:
         self.response_timestamp: str = current_timestamp
         self.response_data: object = response_data
 
-    def __str__(self) -> str:
-        """
-        Return a string representation of the object.
-
-        Returns:
-            str: A string representation of the object.
-        """
-
-        return (
-            f'Response Timestamp: {self.response_timestamp}, '
-            f'Response Data: {self.response_data}'
-        )
-
     def to_json(self) -> dict[str, str | object]:
         """
         Create a JSON representation of an instance of this class.
@@ -56,6 +43,16 @@ class ApplicationResponse:
             'response-timestamp': self.response_timestamp,
             'response-data': self.response_data
         }
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the object.
+
+        Returns:
+            str: A string representation of the object.
+        """
+
+        return str(object=self.to_json())
 
 
 class ServiceHealthResponse:
@@ -86,22 +83,6 @@ class ServiceHealthResponse:
         self.application_status: str = params['application_status']
         self.connected_services_health: list['ServiceHealthResponse'] = []
 
-    def __repr__(self) -> str:
-        """
-        Return a string representation of the object.
-
-        Returns:
-            str: A string representation of the object.
-        """
-
-        return (
-            f'Health Check Timestamp: {self.health_check_timestamp}, '
-            f'Application Name: {self.application_name}, '
-            f'Application Version: {self.application_version}, '
-            f'Application Status: {self.application_status}, '
-            f'Connected Services: {self.connected_services_health}'
-        )
-
     def to_json(self) -> dict[str, object]:
         """
         Create a JSON representation of an instance of this class.
@@ -122,3 +103,13 @@ class ServiceHealthResponse:
                                           for connected_service_health in
                                           self.connected_services_health]
         }
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the object.
+
+        Returns:
+            str: A string representation of the object.
+        """
+
+        return str(object=self.to_json())

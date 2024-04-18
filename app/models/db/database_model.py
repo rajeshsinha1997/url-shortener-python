@@ -36,7 +36,7 @@ class UrlData:
         self.created_on: str = params['created_on']
         self.last_used_on: str = params['last_used_on']
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         """
         Return a string representation of the object.
 
@@ -52,7 +52,7 @@ class UrlData:
             f'Last Used On: {self.last_used_on}'
         )
 
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """
         Return a string representation of the object.
 
@@ -60,4 +60,4 @@ class UrlData:
             str: A string representation of the object.
         """
 
-        return self.__str__()
+        return self.__repr__()
