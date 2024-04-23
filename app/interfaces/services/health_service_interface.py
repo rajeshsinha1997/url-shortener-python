@@ -6,7 +6,7 @@ This module defines the interface for health service classes in the application.
 
 from abc import ABC, abstractmethod
 
-from app.interfaces.repositories.health_repository_interface import IHealthRepository
+from app.interfaces.repositories.url_shortener_repository_interface import IUrlShortenerRepository
 from app.models.response_model import HealthResponse
 
 
@@ -17,13 +17,13 @@ class IHealthService(ABC):
     This interface defines methods for retrieving health information.
     """
 
-    def __init__(self, health_repository: IHealthRepository) -> None:
+    def __init__(self, url_shortener_repository: IUrlShortenerRepository) -> None:
         """
-        Initializes a new instance of the IHealthService interface.
+        Initializes a new instance of the IUrlShortenerRepository interface.
 
-        Args:
-            health_repository (IHealthRepository): An instance of a class implementing the 
-            IHealthRepository interface.
+        Parameters:
+            url_shortener_repository (IUrlShortenerRepository): An instance of a class 
+            implementing the IUrlShortenerRepository interface.
 
         Returns:
             None
@@ -33,19 +33,20 @@ class IHealthService(ABC):
         super().__init__()
 
         # create instance variable to hold reference to the repository instance
-        self.__health_repository: IHealthRepository = health_repository
+        self.__url_shortener_repository: IUrlShortenerRepository = url_shortener_repository
 
     @property
-    def health_repository(self) -> IHealthRepository:
+    def url_shortener_repository(self) -> IUrlShortenerRepository:
         """
-        Getter property for the health repository.
+        Getter property for the url shortener repository.
 
         Returns:
-            IHealthRepository: An instance of a class implementing the IHealthRepository interface.
+            IUrlShortenerRepository: An instance of a class implementing 
+            the IUrlShortenerRepository interface.
         """
 
         # return instance of the repository
-        return self.__health_repository
+        return self.__url_shortener_repository
 
     @abstractmethod
     def get_database_health(self) -> HealthResponse:

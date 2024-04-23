@@ -10,7 +10,7 @@ from loguru import logger
 from sqlalchemy.exc import DBAPIError
 from app.constants.application_constant import \
     APPLICATION_NAME, APPLICATION_STATUS_DOWN, APPLICATION_STATUS_UP
-from app.interfaces.repositories.health_repository_interface import IHealthRepository
+from app.interfaces.repositories.url_shortener_repository_interface import IUrlShortenerRepository
 from app.interfaces.services.health_service_interface import IHealthService
 from app.models.response_model import HealthResponse
 from app.dto.database_information_dto import DatabaseInformationDTO
@@ -24,9 +24,9 @@ class HealthServiceImpl(IHealthService):
     This class provides methods to retrieve health-related information.
     """
 
-    def __init__(self, health_repository: IHealthRepository) -> None:
+    def __init__(self, url_shortener_repository: IUrlShortenerRepository) -> None:
         # call super class constructor
-        super().__init__(health_repository=health_repository)
+        super().__init__(url_shortener_repository=url_shortener_repository)
 
     def get_database_health(self) -> HealthResponse:
         # generate initial health information for the database service
@@ -44,7 +44,7 @@ class HealthServiceImpl(IHealthService):
             # get information of the database being used
             logger.debug('trying to retrieve database information')
             __database_info: DatabaseInformationDTO = \
-                self.health_repository.get_database_information()
+                self.url_shortener_repository.get_database_information()
 
             # update database health information
             __database_health.application_name = __database_info.database_name

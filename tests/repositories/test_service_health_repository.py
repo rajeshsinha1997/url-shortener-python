@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 from pytest import raises
 
-from app.repositories.health_repository_postgresql import get_database_info
+from app.repositories.url_shortener_repository_postgresql import get_database_info
 
 
 def test_get_database_info_without_engine() -> None:
