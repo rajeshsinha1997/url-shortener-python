@@ -2,7 +2,7 @@
 This module contains test functions which are responsible to perform unit testing
 on the ApplicationResponse class
 """
-from app.models.api.response_model import ApplicationResponse
+from app.models.response_model import ApplicationResponse
 
 
 def test_application_response_json() -> None:

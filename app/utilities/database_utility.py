@@ -11,7 +11,6 @@ from loguru import logger
 from sqlalchemy import Engine, create_engine
 
 from app.constants.application_constant import ALLOWED_ECHO_VALUES
-from app.exceptions.custom_application_exceptions import ApplicationInitializationException
 
 
 class DatabaseUtility(ABC):
@@ -51,8 +50,7 @@ class DatabaseUtility(ABC):
                 logger.error('no database URL found in the environment')
 
                 # raise corresponding exception
-                raise ApplicationInitializationException(
-                    exception_message='NO DATABASE URL FOUND IN THE ENVIRONMENT')
+                raise ValueError('NO DATABASE URL FOUND IN THE ENVIRONMENT')
 
             # create database engine
             logger.info('initializing the database engine')
@@ -69,7 +67,7 @@ class DatabaseUtility(ABC):
         logger.info('the database engine has been initialized')
 
     @classmethod
-    def get_database_engine(cls) -> Engine | None:
+    def get_database_engine(cls) -> Engine:
         """
         Get an instance of the database engine.
 
@@ -81,4 +79,10 @@ class DatabaseUtility(ABC):
         """
 
         # return instance of the database engine
+        if cls.__engine is None:
+            logger.error(
+                'trying to access database engine before initializing')
+            raise ReferenceError(
+                'trying to access database engine before initializing')
+
         return cls.__engine

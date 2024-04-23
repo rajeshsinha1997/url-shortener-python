@@ -2,7 +2,7 @@
 This module contains test functions which are responsible to perform unit testing
 on the UrlData class
 """
-from app.models.db.database_model import UrlData
+from app.models.database_model import UrlData
 
 
 def test_url_data_string() -> None:

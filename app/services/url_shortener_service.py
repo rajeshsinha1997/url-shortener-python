@@ -12,7 +12,7 @@ import uuid
 
 from loguru import logger
 
-from app.models.db.database_model import UrlData
+from app.models.database_model import UrlData
 from app.repositories.url_shortener_repository import \
     add_shortened_url_record, find_short_url_value_by_long_url_hash
 from app.utilities.common_utility import generate_hash_from_string, get_current_time_stamp

@@ -55,7 +55,7 @@ class ApplicationResponse:
         return str(object=self.to_json())
 
 
-class ServiceHealthResponse:
+class HealthResponse:
     """
         Model class representing the structure of a service health response.
     """
@@ -81,7 +81,7 @@ class ServiceHealthResponse:
         self.application_name: str = params['application_name']
         self.application_version: str = params['application_version']
         self.application_status: str = params['application_status']
-        self.connected_services_health: list['ServiceHealthResponse'] = []
+        self.connected_services_health: list['HealthResponse'] = []
 
     def to_json(self) -> dict[str, object]:
         """

@@ -8,8 +8,11 @@ retrieving, and deleting a Flask application instance for the URL shortener serv
 from flask import Flask
 from loguru import logger
 
+from app.factories.repository_factory import RepositoryFactory
+from app.factories.service_factory import ServiceFactory
 from app.routes.url_shortener_route import url_shortener_blueprint
-from app.routes.service_health_route import service_health_blueprint
+from app.routes.health_route import HealthBlueprint
+from app.utilities.database_utility import DatabaseUtility
 
 
 class UrlShortenerApplication:
@@ -38,14 +41,21 @@ class UrlShortenerApplication:
             'checking if the url-shortener application has been initialized')
         if cls.__application is None:
             # create flask application
-            logger.debug('initializing the url-shortener application')
+            logger.info('initializing the url-shortener application')
             cls.__application = Flask(import_name=__name__)
 
-            # register blueprints
+            # register health blueprint
             logger.info(
-                'registering blueprints to the url-shortener application')
-            cls.__application.register_blueprint(
-                blueprint=service_health_blueprint)
+                'registering health blueprints to the url-shortener application')
+            cls.__application.register_blueprint(blueprint=HealthBlueprint(
+                name='health',
+                import_name=__name__,
+                url_prefix='/api/health',
+                health_service=ServiceFactory.get_health_service(
+                    health_repository=RepositoryFactory.get_health_repository(
+                        database_engine=DatabaseUtility.get_database_engine()))))
+
+            # register url-shortener blueprint
             cls.__application.register_blueprint(
                 blueprint=url_shortener_blueprint)
         logger.info('the url-shortener application has been initialized')

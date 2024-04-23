@@ -34,7 +34,7 @@ if __environment is None or __environment.lower() != 'production':
 logger.remove()
 
 
-# retrieve required log level information from environment and validate
+# retrieve required log level information from environment
 __log_level: str | None = os.environ.get('LOG_LEVEL')
 
 

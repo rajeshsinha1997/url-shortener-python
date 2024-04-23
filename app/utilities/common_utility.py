@@ -11,8 +11,7 @@ import os
 
 from flask import Request, Response
 from loguru import logger
-from app.exceptions.custom_application_exceptions import QueryFileNotFoundException
-from app.models.api.response_model import ApplicationResponse
+from app.models.response_model import ApplicationResponse
 
 
 def get_current_time_stamp(output_format: str = '%Y/%m/%dT%H:%M:%S:%f') -> str:
@@ -151,23 +150,28 @@ def get_sql_query_from_file(file_path: str) -> str:
         str: The SQL query retrieved from the file.
 
     Raises:
-        QueryFileNotFoundException: If the provided file path does not exist.
+        FileNotFoundError: If the provided file path does not exist.
     """
 
     # check if the provided file path exists
     logger.debug(
         f'checking if the given path to the sql file exists - {file_path}')
     if os.path.exists(path=file_path):
+        # create variable to store retrieved sql query from file
+        __sql_query: str = ''
+
         # open file present at the provided path in reading mode
         logger.debug(
             f'opening the sql file at the given path in reading mode - {file_path}')
         with open(file=file_path, mode='r', encoding='UTF-8') as query:
-            # return the contents of the file into a variable
+            # retrieve the contents of the file into a variable
             logger.debug(
                 f'reading the contents of the sql file at the given path - {file_path}')
-            return query.read()
+            __sql_query = query.read()
+
+        # return the retrieved sql query
+        return __sql_query
     # else throw corresponding error
     else:
         logger.error(f'given path to the sql file is invalid - {file_path}')
-        raise QueryFileNotFoundException(
-            exception_message=f'INVALID SQL QUERY FILE PATH: {file_path}')
+        raise FileNotFoundError(f'invalid sql query file path: {file_path}')

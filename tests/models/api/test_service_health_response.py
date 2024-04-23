@@ -2,7 +2,7 @@
 This module contains test functions which are responsible to perform unit testing
 on the ServiceHealthResponse class
 """
-from app.models.api.response_model import ServiceHealthResponse
+from app.models.response_model import HealthResponse
 
 
 def test_service_health_response_json_no_connected_service() -> None:
@@ -10,7 +10,7 @@ def test_service_health_response_json_no_connected_service() -> None:
     test the JSON representation of an instance of ServiceHealthResponse
     """
     # create instance of ServiceHealthResponse to test
-    __service_health_response = ServiceHealthResponse(params={
+    __service_health_response = HealthResponse(params={
         'current_timestamp': 'test timestamp',
         'application_name': 'test application',
         'application_version': 'test-version',
@@ -35,7 +35,7 @@ def test_service_health_response_string_no_connected_service() -> None:
     test the string representation of an instance of ServiceHealthResponse
     """
     # create instance of ServiceHealthResponse to test
-    __service_health_response = ServiceHealthResponse(params={
+    __service_health_response = HealthResponse(params={
         'current_timestamp': 'test timestamp',
         'application_name': 'test application',
         'application_version': 'test-version',
@@ -61,7 +61,7 @@ def test_service_health_response_json() -> None:
     with a connected service data present
     """
     # create instance of ServiceHealthResponse to test
-    __service_health_response = ServiceHealthResponse(params={
+    __service_health_response = HealthResponse(params={
         'current_timestamp': 'test timestamp',
         'application_name': 'test application',
         'application_version': 'test-version',
@@ -70,7 +70,7 @@ def test_service_health_response_json() -> None:
 
     # add connected service data
     __service_health_response.connected_services_health.append(
-        ServiceHealthResponse(params={
+        HealthResponse(params={
             'current_timestamp': 'test timestamp 2',
             'application_name': 'test application 2',
             'application_version': 'test-version 2',
@@ -101,7 +101,7 @@ def test_service_health_response_string() -> None:
     test the string representation of an instance of ServiceHealthResponse
     """
     # create instance of ServiceHealthResponse to test
-    __service_health_response = ServiceHealthResponse(params={
+    __service_health_response = HealthResponse(params={
         'current_timestamp': 'test timestamp',
         'application_name': 'test application',
         'application_version': 'test-version',
@@ -110,7 +110,7 @@ def test_service_health_response_string() -> None:
 
     # add connected service data
     __service_health_response.connected_services_health.append(
-        ServiceHealthResponse(params={
+        HealthResponse(params={
             'current_timestamp': 'test timestamp 2',
             'application_name': 'test application 2',
             'application_version': 'test-version 2',

@@ -9,7 +9,7 @@ related to url shortening functionality.
 from typing import Any
 from loguru import logger
 from sqlalchemy import Engine, Row, text
-from app.models.db.database_model import UrlData
+from app.models.database_model import UrlData
 from app.utilities.common_utility import get_sql_query_from_file
 from app.utilities.database_utility import DatabaseUtility
 from app.constants.sql_query_file_path_constant import \
