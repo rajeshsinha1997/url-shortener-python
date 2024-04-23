@@ -19,6 +19,7 @@ class DatabaseInformationDTO:
         database_version (str): The version of the database.
         database_connectivity (str): The connectivity status of the database.
     """
+
     database_name: str = 'database name'
     database_version: str = 'database version'
     database_connectivity: str = APPLICATION_STATUS_DOWN

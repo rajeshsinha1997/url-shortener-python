@@ -15,15 +15,6 @@ class IHealthService(ABC):
     Interface for health service classes.
 
     This interface defines methods for retrieving health information.
-
-    Attributes:
-        health_repository (IHealthRepository): An instance of a class implementing the 
-        IHealthRepository interface, providing access to health-related data.
-
-    Methods:
-        get_database_health: An abstract method to retrieve the health status of the database.
-        get_health: An abstract method to retrieve the overall health status of the service.
-
     """
 
     def __init__(self, health_repository: IHealthRepository) -> None:
@@ -37,7 +28,11 @@ class IHealthService(ABC):
         Returns:
             None
         """
+
+        # call super class constructor
         super().__init__()
+
+        # create instance variable to hold reference to the repository instance
         self.__health_repository: IHealthRepository = health_repository
 
     @property
@@ -48,12 +43,14 @@ class IHealthService(ABC):
         Returns:
             IHealthRepository: An instance of a class implementing the IHealthRepository interface.
         """
+
+        # return instance of the repository
         return self.__health_repository
 
     @abstractmethod
     def get_database_health(self) -> HealthResponse:
         """
-        Abstract method to retrieve the health status of the database.
+        Method to retrieve the health status of the database.
 
         Returns:
             HealthResponse: An object representing the health status of the database.
@@ -62,7 +59,7 @@ class IHealthService(ABC):
     @abstractmethod
     def get_health(self) -> HealthResponse:
         """
-        Abstract method to retrieve the overall health status of the service.
+        Method to retrieve the overall health status of the service.
 
         Returns:
             HealthResponse: An object representing the overall health status of the service.

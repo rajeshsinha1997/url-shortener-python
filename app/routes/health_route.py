@@ -59,6 +59,7 @@ class HealthBlueprint(Blueprint):
         Returns:
             Response: HTTP response containing the health data.
         """
+
         try:
             # log request
             logger.info(f'received {request.method} request to {request.url}')

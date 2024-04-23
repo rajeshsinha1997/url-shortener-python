@@ -7,7 +7,7 @@ This module defines the interface for health repository classes in the applicati
 from abc import ABC, abstractmethod
 from sqlalchemy import Engine
 
-from app.models.dto.database_information_dto import DatabaseInformationDTO
+from app.dto.database_information_dto import DatabaseInformationDTO
 
 
 class IHealthRepository(ABC):
@@ -15,18 +15,11 @@ class IHealthRepository(ABC):
     Interface for health repository classes.
 
     This interface defines methods for retrieving database information.
-
-    Attributes:
-        database_engine (Engine): The SQLAlchemy Engine object representing the database connection.
-
-    Methods:
-        get_database_information: An abstract method to retrieve information of the database.
-
     """
 
     def __init__(self, engine: Engine) -> None:
         """
-        Initializes a new instance of the IHealthRepository interface.
+        Initializes a new instance of the class implementing IHealthRepository interface.
 
         Args:
             engine (Engine): The SQLAlchemy Engine object representing the database connection.
@@ -34,7 +27,11 @@ class IHealthRepository(ABC):
         Returns:
             None
         """
+
+        # call super class constructor
         super().__init__()
+
+        # create instance variable to hold reference to the database engine instance
         self.__database_engine: Engine = engine
 
     @property
@@ -45,12 +42,14 @@ class IHealthRepository(ABC):
         Returns:
             Engine: The SQLAlchemy Engine object representing the database connection.
         """
+
+        # return instance of the database engine
         return self.__database_engine
 
     @abstractmethod
     def get_database_information(self) -> DatabaseInformationDTO:
         """
-        Abstract method to retrieve information of the database.
+        Method to retrieve information of the database.
 
         Returns:
             DatabaseInformationDTO: An instance of DatabaseInformationDTO class, containing
