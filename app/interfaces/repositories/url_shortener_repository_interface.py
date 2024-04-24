@@ -1,3 +1,10 @@
+"""
+Module: url_shortener_repository_interface
+
+This module provides an interface for URL shortener repository classes,
+defining methods for interacting with the database in a URL shortener application.
+"""
+
 from abc import ABC, abstractmethod
 from sqlalchemy import Engine
 

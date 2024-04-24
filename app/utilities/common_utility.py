@@ -171,7 +171,7 @@ def get_sql_query_from_file(file_path: str) -> str:
 
         # return the retrieved sql query
         return __sql_query
-    # else throw corresponding error
-    else:
-        logger.error(f'given path to the sql file is invalid - {file_path}')
-        raise FileNotFoundError(f'invalid sql query file path: {file_path}')
+
+    # throw corresponding error if file path does not exists
+    logger.error(f'given path to the sql file is invalid - {file_path}')
+    raise FileNotFoundError(f'invalid sql query file path: {file_path}')

@@ -8,7 +8,8 @@ instances of repository classes.
 from sqlalchemy import Engine
 from app.interfaces.repositories.url_shortener_repository_interface \
     import IUrlShortenerRepository
-from app.repositories.url_shortener_repository_postgresql import UrlShortenerRepositoryPostgreSQLImpl
+from app.repositories.url_shortener_repository_postgresql \
+    import UrlShortenerRepositoryPostgreSQLImpl
 
 
 class RepositoryFactory:
