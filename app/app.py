@@ -10,7 +10,7 @@ from loguru import logger
 
 from app.factories.repository_factory import RepositoryFactory
 from app.factories.service_factory import ServiceFactory
-from app.routes.url_shortener_route import url_shortener_blueprint
+from app.routes.url_shortener_route import UrlShortenerBlueprint
 from app.routes.health_route import HealthBlueprint
 from app.utilities.database_utility import DatabaseUtility
 
@@ -52,12 +52,18 @@ class UrlShortenerApplication:
                 import_name=__name__,
                 url_prefix='/api/health',
                 health_service=ServiceFactory.get_health_service(
-                    health_repository=RepositoryFactory.get_health_repository(
+                    repository=RepositoryFactory.get_health_repository(
                         database_engine=DatabaseUtility.get_database_engine()))))
 
             # register url-shortener blueprint
             cls.__application.register_blueprint(
-                blueprint=url_shortener_blueprint)
+                blueprint=UrlShortenerBlueprint(
+                    name='url_shortener',
+                    import_name=__name__,
+                    url_prefix='/api/url',
+                    url_shortener_service=ServiceFactory.get_url_shortener_service(
+                        repository=RepositoryFactory.get_health_repository(
+                            database_engine=DatabaseUtility.get_database_engine()))))
         logger.info('the url-shortener application has been initialized')
 
     @classmethod
